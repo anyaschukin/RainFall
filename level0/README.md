@@ -27,7 +27,7 @@ No !
 ```
 Let's have a closer look in gdb.
 ```
-level0@RainFall:~$ gdb level0
+level0@RainFall:~$ gdb -q level0
 ...
 (gdb) disas main
 ...
