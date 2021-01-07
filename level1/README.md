@@ -78,7 +78,7 @@ level2@RainFall:/tmp$ gcc level1_source.c -fno-stack-protector -o level1_source
 ```
 Edit permissions including suid, then move the binary to home directory.
 ```
-level2@RainFall:/tmp$ chmod u+s level1_ source
+level2@RainFall:/tmp$ chmod u+s level1_source
 level2@RainFall:/tmp$ chmod +wx ~; mv level1_source ~
 ```
 Exit back to user level1, then run the binary.
