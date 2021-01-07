@@ -73,13 +73,13 @@ So the password for level2 is ```53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0a
 
 As user level2, create source.c, then compile in /tmp/.
 ```
-level2@RainFall: cd /tmp
-level2@RainFall: gcc level1_source.c -fno-stack-protector -o level1_source
+level2@RainFall:~$ cd /tmp
+level2@RainFall:/tmp$ gcc level1_source.c -fno-stack-protector -o level1_source
 ```
 Edit permissions including suid, then move the binary to home directory.
 ```
-level2@RainFall: chmod u+s level1_ source
-level2@RainFall: chmod +wx ~; mv level1_source ~
+level2@RainFall:/tmp$ chmod u+s level1_ source
+level2@RainFall:/tmp$ chmod +wx ~; mv level1_source ~
 ```
 Exit back to user level1, then run the binary.
 ```
