@@ -2,7 +2,7 @@
 
 ## Context
 
-In our home directory we find a binary with suid set and owner ```level1```
+In our home directory we find a binary with SUID and owner ```level1```
 ```
 level0@RainFall:~$ ls -l
 -rwsr-x---+ 1 level1 users 747441 Mar  6  2016 level0
