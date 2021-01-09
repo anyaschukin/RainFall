@@ -48,7 +48,7 @@ Dump of assembler code for function p:
    
    0x08048532 <+94>:	lea    -0x4c(%ebp),%eax
    0x08048535 <+97>:	mov    %eax,(%esp)
-   0x08048538 <+100>:	call   0x80483e0 <strdup@plt>
+   0x08048538 <+100>:   call   0x80483e0 <strdup@plt> ; call strdup()
    0x0804853d <+105>:	leave
    0x0804853e <+106>:	ret
 End of assembler dump.
