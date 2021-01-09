@@ -28,7 +28,7 @@ Dump of assembler code for function main:
 End of assembler dump.
 ```
 We can see here that ```level3``` makes a call to ```main()```, which makes a call to a function ```v()```. <br/>
-Let's take a deeper look a ```v()```.
+Let's take a deeper look a ```v()```.<br/><br/>
 We can see two function calls in ```v()```. <br/>
 One is to ```fgets()```, which is protected against buffer overflow attacks. <br/>
 The other is to ```printf()```, which is vulnerable to string format exploits. 
@@ -45,8 +45,8 @@ We also find a global variable ```m``` at address 0x804988c.
 (gdb) info variables
 0x0804988c  m
 ```
-Back in ```v()```, we see a comparison of variable ```m``` to the value 64 (or $0x40 in hexadecimal).
-If the comparison is not equal (```jne```), then the program quits.
+Back in ```v()```, we see a comparison of variable ```m``` to the value 64 (or $0x40 in hexadecimal).<br/>
+If the comparison is not equal (```jne```), then the program quits.<br/>
 If the comparison is true, the program makes a call to ```system()``` and launches a shell. 
 ```
    0x080484da <+54>:	mov    0x804988c,%eax
