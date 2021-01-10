@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Buffer overflow
+Stack overflow
 
 ## Context
 
