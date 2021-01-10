@@ -71,7 +71,7 @@ So the password for level2 is ```53a4a712787f40ec66c3c26c1f4b164dcad5552b038bb0a
 
 ## Recreate Exploited Binary
 
-As user level2, create level1_source.c, then compile in /tmp/.
+As user level2, in /tmp, create and compile level1_source.c.
 ```
 level2@RainFall:~$ cd /tmp
 level2@RainFall:/tmp$ gcc level1_source.c -fno-stack-protector -o level1_source
