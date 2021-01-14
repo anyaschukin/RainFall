@@ -1,5 +1,9 @@
 # Level 0
 
+## Vulnerability
+
+gdb disassembly reveals argument password
+
 ## Context
 
 In our home directory we find a binary with SUID and owner ```level1```
