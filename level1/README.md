@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Buffer overflow exploit<br/>
+Stack overflow <br/>
 [Owasp example](https://owasp.org/www-community/attacks/Buffer_overflow_attack)
 
 ## Context
