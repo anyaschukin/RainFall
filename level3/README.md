@@ -101,7 +101,8 @@ Edit permissions including suid, then move the binary to home directory.
 level4@RainFall:/tmp$ chmod u+s level3_source
 level4@RainFall:/tmp$ chmod +wx ~; mv level3_source ~
 ```
-Exit back to user level3, then run the binary.
+Exit back to user level3, then run the binary. <br/>
+(Note: Our new variable ```m``` is located at 0x0804a04c).
 ```
 level4@RainFall:/tmp$ exit
 exit
