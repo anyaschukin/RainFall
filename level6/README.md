@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-strcpy() buffer overflow
+strcpy() heap overflow
 
 ## Context
 
