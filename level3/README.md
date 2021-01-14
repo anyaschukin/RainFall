@@ -71,7 +71,7 @@ level3@RainFall:~$ python -c "print '\x8c\x98\x04\x08'+'%x %x %x %x'" | ./level3
 ```
 Great. Now how do we get our new ```m``` to have the value 64?<br/>
 Well, we also know that with ```printf```'s ```%n``` modifier, some values can be written to memory. <br/>
-%n means: "the next argument is an int * – go there and write the number characters written so far".<br/>
+```%n``` means: "the next argument is an ```int *``` – go there and write the number characters written so far".<br/>
 Let's break down what this exploit format string will look like. <br/>
 
 - address of ```m``` [4 bytes]
