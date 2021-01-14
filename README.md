@@ -2,7 +2,7 @@
 
 Discover gdb disassembly and binary exploitation through 14 little challenges
 
-README.md how to getflag for each level
+README.md how to find password for each level
 
 ## Levels Overview
 
