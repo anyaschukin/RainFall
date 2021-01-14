@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Printf format string exploit
+Printf format string attack with %d
 
 ## Context
 
