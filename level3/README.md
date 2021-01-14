@@ -16,6 +16,7 @@ We have a binary that prints input from the stdin.
 
 ## Solution
 Let's take a look at the binary in gdb. 
+We can see here that ```level3``` makes a call to ```main()```, which makes a call to a function ```v()```. <br/>
 ```
 (gdb) disas main
 Dump of assembler code for function main:
@@ -27,7 +28,6 @@ Dump of assembler code for function main:
    0x08048526 <+12>:	ret
 End of assembler dump.
 ```
-We can see here that ```level3``` makes a call to ```main()```, which makes a call to a function ```v()```. <br/>
 Let's take a deeper look a ```v()```.<br/><br/>
 We can see two function calls in ```v()```. <br/>
 One is to ```fgets()```, which is protected against buffer overflow attacks. <br/>
