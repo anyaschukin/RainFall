@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Printf format string attack with %d
+printf() format string attack with %d
 
 ## Context
 
