@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Buffer Overflow Exploit
+printf() format string attack
 
 ## Context
 ```
