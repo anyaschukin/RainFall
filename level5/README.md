@@ -54,10 +54,10 @@ Dump of assembler code for function o:
    0x080484b1 <+13>:	call   0x80483b0 <system@plt>
 ```
 Why are all these functions ```@plt```? <br/>
-A little background: <br/>
-A PLT (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external functions / shared libraries (for example, libc functions).  <br/>
-These jump instructions jump to the GOT (or Global Offset Table), which contains the actual function address.  <br/>
-The PLT is read-only but the GOT can be written to. If one of the GOT's function addresses is overwritten, the execution flow of the program can be controlled.  
+~ A little background: ~ <br/>
+A ```PLT``` (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external functions / shared libraries (for example, libc functions). These jump instructions jump to the ```GOT``` (or Global Offset Table), which contains the actual function address.  <br/>
+The PLT is read-only but the GOT can be written to. <br/>
+If one of the GOT's function addresses is overwritten, the execution flow of the program can be controlled.  
 
 
 
