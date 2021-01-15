@@ -22,10 +22,17 @@ README.md how to find password for each level
 
 * Level 7 - 
 
-* Level 8 - 
+* Level 8 - idiocy
 
 * Level 9 - 
 
+* bonus 0 - strcpy() heap overflow
+
+* bonus 1 - 
+
+* bonus 2 - 
+
+* bonus 3 - 
 
 ## Virtual Machine setup
 
