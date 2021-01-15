@@ -55,28 +55,24 @@ Dump of assembler code for function o:
 ```
 Why are all these functions ```@plt```? <br/>
 ~ A little background: ~ <br/>
-A ```PLT``` (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external functions / shared libraries (for example, libc functions). These jump instructions jump to the ```GOT``` (or Global Offset Table), which contains the actual function address.  <br/>
+A ```PLT``` (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external functions / shared libraries (for example, libc functions). These jump instructions jump to the ```GOT``` (or Global Offset Table), which contains the actual function address. <br/>
 The PLT is read-only but the GOT can be written to. <br/>
-If one of the GOT's function addresses is overwritten, the execution flow of the program can be controlled.  
+The execution flow of the program can be controlled by overwriting one of the GOT's function addresses. <br/>
+So... what's the plan? <br/>
+We can leverage ```printf``` in a format string attack to replace the address of ```exit()``` with the address of ```o()```, which will then call ```system``` to launch a new shell. <br/> <br/> 
 
-
-
-Insight: we can leverage ```printf``` in a format string attack to call ```o()```, which will call ```system``` to launch a new shell. <br/>
-How? Here's what we know:
-- there's no point in causing a buffer overflow because ```n()``` exits directly after calling ```printf``` instead of returning to ```main()```. <br/>
-- we can write over the Global Offset Table
-
-
+Let's locate the addresses of ```exit()``` and ```o()```. <br/> 
 ```
 (gdb) info functions
 All defined functions:
 
-0x08048380  printf
-0x08048390  _exit
-0x080483a0  fgets
-0x080483b0  system
-0x080483d0  exit
+[...]
+0x080483d0  exit@plt
 0x080484a4  o
-0x080484c2  n
-0x08048504  main
 ```
+Unfortunately, the real address of ```exit()``` is in the GOT. Let's looks there. 
+```
+level5@RainFall:~$ objdump -R level5 | grep exit
+08049838 R_386_JUMP_SLOT   exit
+```
+So the address of ```exit()``` is 0x08049838, and the address of ```o()``` is 0x080484a4.
