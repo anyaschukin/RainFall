@@ -75,7 +75,7 @@ Dump of assembler code for function p:
    0x080484c0 <+12>:	mov    %eax,(%esp)
    0x080484c3 <+15>:	call   0x80483b0 <puts@plt>      ; puts(" - ");
    0x080484c8 <+20>:	movl   $0x1000,0x8(%esp)
-   0x080484d0 <+28>:	lea    -0x1008(%ebp),%eax
+   0x080484d0 <+28>:	lea    -0x1008(%ebp),%eax        ; buffer address
    0x080484d6 <+34>:	mov    %eax,0x4(%esp)
    0x080484da <+38>:	movl   $0x0,(%esp)
    0x080484e1 <+45>:	call   0x8048380 <read@plt>      ; read(0, buffer, 4096);
