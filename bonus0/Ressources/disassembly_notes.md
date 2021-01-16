@@ -58,11 +58,11 @@ Dump of assembler code for function pp:
    0x0804858e <+112>:	mov    %eax,0x4(%esp)
    0x08048592 <+116>:	mov    0x8(%ebp),%eax
    0x08048595 <+119>:	mov    %eax,(%esp)
-   0x08048598 <+122>:	call   0x8048390 <strcat@plt> ; strcat(buffer, b); join two input strings
+   0x08048598 <+122>:	call   0x8048390 <strcat@plt>    ; strcat(buffer, b); join two input strings
    0x0804859d <+127>:	add    $0x50,%esp
-   0x080485a0 <+130>:	pop    %ebx                   ; retrieve old ebx
-   0x080485a1 <+131>:	pop    %edi                   ; retrieve old edi
-   0x080485a2 <+132>:	pop    %ebp                   ; retrieve old ebp
+   0x080485a0 <+130>:	pop    %ebx                      ; retrieve old ebx
+   0x080485a1 <+131>:	pop    %edi                      ; retrieve old edi
+   0x080485a2 <+132>:	pop    %ebp                      ; retrieve old ebp
    0x080485a3 <+133>:	ret
 End of assembler dump.
 
