@@ -2,7 +2,13 @@
 
 Discover gdb disassembly and binary exploitation through 14 little challenges
 
-README.md how to find password for each level
+For each level:
+
+* ```flag``` password for next level
+
+* ```README.md``` how to find password for each level
+
+* ```source.c``` the reverse engineered binary
 
 ## Levels Overview
 
