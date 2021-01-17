@@ -22,7 +22,7 @@ For each level:
 
 * Level 4 - printf() format string attack, with %d
 
-* Level 5 - 
+* Level 5 - printf() format string attack, with %d
 
 * Level 6 - strcpy() heap overflow
 
