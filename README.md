@@ -36,7 +36,7 @@ For each level:
 
 * bonus 1 - 
 
-* bonus 2 - 
+* bonus 2 - strcat() heap overflow
 
 * bonus 3 - 
 
