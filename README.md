@@ -36,7 +36,7 @@ For each level:
 
 * bonus 1 - 
 
-* bonus 2 - strcat() heap overflow
+* bonus 2 - strcat() heap overflow, return-to-libc
 
 * bonus 3 - 
 
