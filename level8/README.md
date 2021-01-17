@@ -81,7 +81,7 @@ level9
 
 ## Recreate Exploited Binary
 
-As user level9, in /tmp, create and compile level8_source.c
+As user ```level9```, in ```/tmp```, create and compile ```level8_source.c```
 ```
 level9@RainFall:/tmp$ gcc level8_source.c -o level8_source
 ```
@@ -89,7 +89,7 @@ Edit permissions including suid, then move the binary to home directory.
 ```
 level9@RainFall:/tmp$ chmod u+s level8_source; chmod +wx ~; mv level8_source ~
 ```
-Exit back to user level8, then run the source.
+Exit back to user ```level8```, then run the source.
 ```
 level9@RainFall:/tmp$ exit
 exit
