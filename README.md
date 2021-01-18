@@ -24,7 +24,7 @@ For each level:
 
 * Level 5 - printf() format string attack, with %d
 
-* Level 6 - strcpy() heap overflow
+* Level 6 - strcpy() buffer overflow
 
 * Level 7 - 
 
@@ -32,11 +32,11 @@ For each level:
 
 * Level 9 - 
 
-* bonus 0 - strcpy() heap overflow
+* bonus 0 - strcpy() buffer overflow
 
 * bonus 1 - 
 
-* bonus 2 - strcat() heap overflow, return-to-libc
+* bonus 2 - strcat() buffer overflow, exploit in env
 
 * bonus 3 - 
 
