@@ -90,6 +90,7 @@ Let's take a closer look at ```m()```.
 ```
 (gdb) disas m
 Dump of assembler code for function m:
+
    0x080484f4 <+0>:	push   %ebp
    0x080484f5 <+1>:	mov    %esp,%ebp                    ; create a new stack frame
    
