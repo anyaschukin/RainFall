@@ -103,8 +103,10 @@ Dump of assembler code for function m:
    0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)         ; store the address of global variable c in esp+4
    0x08048517 <+35>:	mov    %edx,(%esp)                  ; set arguments
    0x0804851a <+38>:	call   0x80483b0 <printf@plt>       ; printf(esp, esp+4, esp+8) ... printf("%s - %d\n", global_c, time(0))
+   
    0x0804851f <+43>:	leave
    0x08048520 <+44>:	ret
+   
 End of assembler dump.
 ```
 
