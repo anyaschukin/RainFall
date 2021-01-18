@@ -1,6 +1,13 @@
 # Disassembly
 
 ```
+push   %ebp
+mov    %esp,%ebp
+```
+Establishes a new stack frame within the callee, while preserving the stack frame of the caller. A stack frame allows consistent access to passed parameters and local variables using fixed offsets relative to EBP anywhere in the function, while ESP is free to continue being modified as needed while the function is running. 
+
+Let's take a deeper look at ```main()```.
+```
 level7@RainFall:~$ gdb -q level7
 ...
 (gdb) disas main
@@ -73,4 +80,31 @@ Dump of assembler code for function main:
    
    0x080485f0 <+207>:	movl   $0x8048703,(%esp)        ; set arguments
    0x080485f7 <+214>:	call   0x8048400 <puts@plt>     ; puts("~~")
+   
+   0x080485fc <+219>:	mov    $0x0,%eax                ; return(0)
+   0x08048601 <+224>:	leave
+   0x08048602 <+225>:	ret
 ```
+
+Let's take a closer look at ```m()```.
+```
+(gdb) disas m
+Dump of assembler code for function m:
+   0x080484f4 <+0>:	push   %ebp
+   0x080484f5 <+1>:	mov    %esp,%ebp                    ; create a new stack frame
+   
+   0x080484f7 <+3>:	sub    $0x18,%esp                   ; 24 bytes are allocated for the function and its local variables
+   
+   0x080484fa <+6>:	movl   $0x0,(%esp)                  ; set arguments
+   0x08048501 <+13>:	call   0x80483d0 <time@plt>         ; time(0)
+   
+   0x08048506 <+18>:	mov    $0x80486e0,%edx              ; edx = "%s - %d\n"
+   0x0804850b <+23>:	mov    %eax,0x8(%esp)               ; set arguments
+   0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)         ; store the address of global variable c in esp+4
+   0x08048517 <+35>:	mov    %edx,(%esp)                  ; set arguments
+   0x0804851a <+38>:	call   0x80483b0 <printf@plt>       ; printf(esp, esp+4, esp+8) ... printf("%s - %d\n", global_c, time(0))
+   0x0804851f <+43>:	leave
+   0x08048520 <+44>:	ret
+End of assembler dump.
+```
+
