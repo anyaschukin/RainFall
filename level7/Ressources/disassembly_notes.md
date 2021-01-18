@@ -10,7 +10,7 @@ Dump of assembler code for function main:
    0x08048522 <+1>:	mov    %esp,%ebp
    
    0x08048524 <+3>:	and    $0xfffffff0,%esp
-   0x08048527 <+6>:	sub    $0x20,%esp                 ; allocates 32 bytes for main() and its local variables
+   0x08048527 <+6>:	sub    $0x20,%esp               ; allocates 32 bytes for main() and its local variables
 
    0x0804852a <+9>:	movl   $0x8,(%esp)
    0x08048531 <+16>:	call   0x80483f0 <malloc@plt>   ; malloc(8)
