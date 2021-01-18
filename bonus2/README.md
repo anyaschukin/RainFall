@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-strcat() stack overflow
+strcat() buffer overflow
 
 ## Context
 
