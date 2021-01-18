@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-strcat() heap overflow, return-to-libc
+strcat() stack overflow
 
 ## Context
 
