@@ -31,9 +31,9 @@ Dump of assembler code for function main:
    0x08048460 <+60>:	mov    (%eax),%eax            ; pointer to argv[2]
    0x08048462 <+62>:	mov    %eax,%edx
    0x08048464 <+64>:	lea    0x14(%esp),%eax
-   0x08048468 <+68>:	mov    %ecx,0x8(%esp)
-   0x0804846c <+72>:	mov    %edx,0x4(%esp)
-   0x08048470 <+76>:	mov    %eax,(%esp)
+   0x08048468 <+68>:	mov    %ecx,0x8(%esp)         ; load argument - atoi(argv[1]) * 4
+   0x0804846c <+72>:	mov    %edx,0x4(%esp)         ; load argument - argv[2]
+   0x08048470 <+76>:	mov    %eax,(%esp)            ; load argument - str
    0x08048473 <+79>:	call   0x8048320 <memcpy@plt> ; memcpy(str, argv[2], atoi(argv[1]) * 4)
    
    0x08048478 <+84>:	cmpl   $0x574f4c46,0x3c(%esp) ; if not atoi(argv[1]) == 0x574f4c46, return(0)
