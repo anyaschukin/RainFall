@@ -24,7 +24,7 @@ Dump of assembler code for function main:
    0x08048448 <+36>:	mov    $0x1,%eax              : load (1) for return(1)
    0x0804844d <+41>:	jmp    0x80484a3 <main+127>   ; jump to end
    
-   0x0804844f <+43>:	mov    0x3c(%esp),%eax
+   0x0804844f <+43>:	mov    0x3c(%esp),%eax        ; load atoi(argv[1]) return
    0x08048453 <+47>:	lea    0x0(,%eax,4),%ecx      ; store atoi(argv[1]) * 4
    0x0804845a <+54>:	mov    0xc(%ebp),%eax         ; retreive argv
    0x0804845d <+57>:	add    $0x8,%eax              ; increment to argv[2]
