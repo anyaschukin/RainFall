@@ -23,4 +23,10 @@ bonus1@RainFall:~$
 
 Investigating with gdb we find only ```main()```, no other functions. ```main()``` calls ```memcpy()``` which is vulnerable to buffer overflow.
 
-First ```main()``` calls ```atoi(argv[1])```, and exits the program if not less than 10. 
+First ```main()``` reads the first argument ```nb = atoi(argv[1])```, and exits the program if ```nb``` not less than 10. So any number less than 10, easy!
+
+Next ```memcpy()``` copies ```argv[2]``` to a buffer on the stack with the potential to overflow ```nb```.
+
+Finally, if now ```nb``` == 0x574f4c46 a shell is opened.
+
+So we want to use ```memcpy()``` to overflow ```nb``` with 0x574f4c46. The problem is ```memcpy()``` copies ```nb``` * 4 bytes, max 9 * 4 = 36, not long enough to reach and overflow ```nb``` at 40 bytes.
