@@ -76,9 +76,15 @@ End of assembler dump.
 Sooo the exploit here is to call ```m()``` by overwriting ```puts()``` in the GOT... and thus print ```c``` (and the password)!
 
 Lets locate the addresses of ```m()``` and ```puts()```.
-We saw earlier in ```(gdb) info functions``` the address of ```m()``` is 0x080484f4.
-We saw earlier in ```(gdb) disas main```the address of ```puts()``` in the PLT is 0x8048400, but that's just a pointer to another memory address. Lets see if we can get its GOT address... it's 0x8049928.
+We can see the address of ```m()``` is 0x080484f4, and the address of ```puts@plt``` is 0x8048400.
+But that's just a pointer to ```puts``` GOT address – which, upon closer inspection is 0x8049928.
 ```
+(gdb) info function
+All defined functions:
+[...]
+0x08048400  puts@plt
+0x080484f4  m
+[...]
 (gdb) x/i 0x8048400
    0x8048400 <puts@plt>:	jmp    *0x8049928
 ```
