@@ -75,7 +75,7 @@ End of assembler dump.
 ```
 Sooo the exploit here is to call ```m()``` by overwriting ```puts()``` in the GOT... and thus print ```c``` (and the password)!
 
-Lets locate the addresses of ```m()``` and ```puts()```.
+Let's locate the addresses of ```m()``` and ```puts()```.
 We can see the address of ```m()``` is 0x080484f4, and the address of ```puts@plt``` is 0x8048400.
 But that's just a pointer to ```puts``` GOT address – which, upon closer inspection is 0x8049928.
 ```
@@ -110,8 +110,8 @@ Here is what our string attack should look like:
 - address of m() [4 bytes]
 Let's visualize that. 
 ```
-"paddings [20 bytes] + puts GOT address" + "m() address"
-               argv[1]                       argv[2]
+"paddings [20 bytes] + GOT address of puts" + "address of m()"
+                  argv[1]                          argv[2]
 ```
 Let's try it out!
 ```
