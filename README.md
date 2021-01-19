@@ -34,7 +34,7 @@ For each level:
 
 * bonus 0 - strcpy() buffer overflow
 
-* bonus 1 - 
+* bonus 1 - memcpy() buffer overflow
 
 * bonus 2 - strcat() buffer overflow, exploit in env
 
