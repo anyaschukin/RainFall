@@ -49,7 +49,7 @@ It then does nothing with ```c```.
 0x8049960 <c>:	 ""
 ```
 Let's see if that's everything. 
-We can see a function ```m()``` that is never called. 
+We also find a function ```m()``` that is never called. 
 This function prints ```time()``` and the variable ```c```!
 ```
 (gdb) info function
