@@ -51,8 +51,8 @@ Dump of assembler code for function main:
    0x08048592 <+113>:	mov    0x1c(%esp),%eax
    0x08048596 <+117>:	mov    0x4(%eax),%eax           ; eax = a[1]
    
-   0x08048599 <+120>:	mov    %edx,0x4(%esp)           ; set arguments
-   0x0804859d <+124>:	mov    %eax,(%esp)              ; set arguments
+   0x08048599 <+120>:	mov    %edx,0x4(%esp)           ; set argument 2
+   0x0804859d <+124>:	mov    %eax,(%esp)              ; set argument 1
    0x080485a0 <+127>:	call   0x80483e0 <strcpy@plt>   ; strcpy(esp, esp+4) ... strcpy((char *)a[1], av[1])
    
    0x080485a5 <+132>:	mov    0xc(%ebp),%eax           ; store the value of argv[2] in eax... eax now points to argv[2]
@@ -63,19 +63,19 @@ Dump of assembler code for function main:
    0x080485af <+142>:	mov    0x18(%esp),%eax          
    0x080485b3 <+146>:	mov    0x4(%eax),%eax           ; eax = b[1]
    
-   0x080485b6 <+149>:	mov    %edx,0x4(%esp)           ; set arguments
-   0x080485ba <+153>:	mov    %eax,(%esp)              ; set arguments
+   0x080485b6 <+149>:	mov    %edx,0x4(%esp)           ; set argument 2
+   0x080485ba <+153>:	mov    %eax,(%esp)              ; set argument 1
    0x080485bd <+156>:	call   0x80483e0 <strcpy@plt>   ; strcpy(esp, esp+4) ... strcpy((char *)b[1], av[2])
    
-   0x080485c2 <+161>:	mov    $0x80486e9,%edx          ; set arguments
-   0x080485c7 <+166>:	mov    $0x80486eb,%eax          ; set arguments
+   0x080485c2 <+161>:	mov    $0x80486e9,%edx          ; set argument 2
+   0x080485c7 <+166>:	mov    $0x80486eb,%eax          ; set argument 1
    0x080485cc <+171>:	mov    %edx,0x4(%esp)           ; move edx into esp+4 and set up esp+4 as argument
    0x080485d0 <+175>:	mov    %eax,(%esp)              ; move eax into esp and set up esp as argument
    0x080485d3 <+178>:	call   0x8048430 <fopen@plt>    ; fopen(esp, esp+4) ... fopen("/home/user/level8/.pass", "r"))
    
-   0x080485d8 <+183>:	mov    %eax,0x8(%esp)           ; set arguments
-   0x080485dc <+187>:	movl   $0x44,0x4(%esp)          ; set arguments
-   0x080485e4 <+195>:	movl   $0x8049960,(%esp)        ; set arguments
+   0x080485d8 <+183>:	mov    %eax,0x8(%esp)           ; set argument 3
+   0x080485dc <+187>:	movl   $0x44,0x4(%esp)          ; set argument 2 (load value of 64 in fgets argument 2)
+   0x080485e4 <+195>:	movl   $0x8049960,(%esp)        ; set argument 1
    0x080485eb <+202>:	call   0x80483c0 <fgets@plt>    ; fgets(esp, esp+4, esp+8) ... fgets(c, 68, fopen("/home/user/level8/.pass", "r"))
    
    0x080485f0 <+207>:	movl   $0x8048703,(%esp)        ; set arguments
@@ -100,9 +100,9 @@ Dump of assembler code for function m:
    0x08048501 <+13>:	call   0x80483d0 <time@plt>         ; time(0)
    
    0x08048506 <+18>:	mov    $0x80486e0,%edx              ; edx = "%s - %d\n"
-   0x0804850b <+23>:	mov    %eax,0x8(%esp)               ; set arguments
-   0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)         ; set arguments (store the address of global variable c in esp+4)
-   0x08048517 <+35>:	mov    %edx,(%esp)                  ; set arguments
+   0x0804850b <+23>:	mov    %eax,0x8(%esp)               ; set argument 3
+   0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)         ; set argument 2 (store the address of global variable c in esp+4)
+   0x08048517 <+35>:	mov    %edx,(%esp)                  ; set argument 1
    0x0804851a <+38>:	call   0x80483b0 <printf@plt>       ; printf(esp, esp+4, esp+8) ... printf("%s - %d\n", global_c, time(0))
    
    0x0804851f <+43>:	leave
