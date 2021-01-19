@@ -29,7 +29,7 @@ Next ```memcpy()``` copies ```n``` * 4 bytes from ```argv[2]``` to a buffer on t
 
 Finally, if now ```n``` == 0x574f4c46 ("FLOW" in ascii) a shell is opened.
 
-So we want to use ```memcpy()``` to overflow ```n``` with 0x574f4c46. The problem is ```n``` <= 9, ```memcpy()``` copies ```n``` * 4 bytes, 9 * 4 = 36. Not long enough to reach and overwrite ```n```, 44 bytes minimum. The solution is to use a negative number which when multiplied by 4 is more than 44 (n * 4 => 44).
+So we want to use ```memcpy()``` to overflow ```n``` with 0x574f4c46. The problem is ```n``` <= 9, ```memcpy()``` copies ```n``` * 4 bytes, 9 * 4 = 36. Not long enough to reach and overwrite ```n```, 44 bytes minimum. The solution is to use a negative number which when multiplied by 4 is at least 44 (n * 4 => 44).
 
 ### Find n (first argument)
 
