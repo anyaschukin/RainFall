@@ -29,8 +29,8 @@ Dump of assembler code for function main:
    0x0804845a <+54>:	mov    0xc(%ebp),%eax         ; retreive argv
    0x0804845d <+57>:	add    $0x8,%eax              ; increment to argv[2]
    0x08048460 <+60>:	mov    (%eax),%eax            ; pointer to argv[2]
-   0x08048462 <+62>:	mov    %eax,%edx
-   0x08048464 <+64>:	lea    0x14(%esp),%eax
+   0x08048462 <+62>:	mov    %eax,%edx              ; pointer to argv[2] again
+   0x08048464 <+64>:	lea    0x14(%esp),%eax        ; load address of str to overflow, 40 bytes above argv[1]
    0x08048468 <+68>:	mov    %ecx,0x8(%esp)         ; load argument - atoi(argv[1]) * 4
    0x0804846c <+72>:	mov    %edx,0x4(%esp)         ; load argument - argv[2]
    0x08048470 <+76>:	mov    %eax,(%esp)            ; load argument - str
@@ -44,7 +44,7 @@ Dump of assembler code for function main:
    0x08048492 <+110>:	movl   $0x8048583,(%esp)      ; load argument - "/bin/sh"
    0x08048499 <+117>:	call   0x8048350 <execl@plt>  ; execl("/bin/sh", "sh", 0)
    
-   0x0804849e <+122>:	mov    $0x0,%eax              ; load (0) for return(1)
+   0x0804849e <+122>:	mov    $0x0,%eax              ; load (0) for return(0)
    0x080484a3 <+127>:	leave
    0x080484a4 <+128>:	ret
 End of assembler dump.
