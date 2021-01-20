@@ -71,14 +71,14 @@ Dump of assembler code for function main:
    0x080485cf <+219>:	mov    %eax,0x4(%esp)           ; load argument 2 - pointer to argv[1]
    0x080485d3 <+223>:	lea    0x18(%esp),%eax          ; load buffer address
    0x080485d7 <+227>:	mov    %eax,(%esp)              ; load argument 2 - buffer address
-   0x080485da <+230>:	call   0x80483b0 <strcmp@plt>   ; strcmp(buffer, argv[1])
+   0x080485da <+230>:	call   0x80483b0 <strcmp@plt>   ; strcmp(buffer, argv[1])               ####
    0x080485df <+235>:	test   %eax,%eax                ; strcmp() == 0?
    0x080485e1 <+237>:	jne    0x8048601 <main+269>     ; if !0 jump past execl() opening shell
    
    0x080485e3 <+239>:	movl   $0x0,0x8(%esp)           ; load argument 3 - NULL
    0x080485eb <+247>:	movl   $0x8048707,0x4(%esp)     ; load argument 2 - "sh"
    0x080485f3 <+255>:	movl   $0x804870a,(%esp)        ; load argument 1 - "/bin/sh"
-   0x080485fa <+262>:	call   0x8048420 <execl@plt>    ; execl("/bin/sh", "sh", NULL)
+   0x080485fa <+262>:	call   0x8048420 <execl@plt>    ; execl("/bin/sh", "sh", NULL)          ####
    0x080485ff <+267>:	jmp    0x8048610 <main+284>     ; jump to return(0)
 
    0x08048601 <+269>:	lea    0x18(%esp),%eax          ; load buffer address
