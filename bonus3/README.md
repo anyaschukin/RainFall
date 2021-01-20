@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-
+```strcmp()``` with empty argument
 
 ## Context
 
@@ -27,7 +27,7 @@ In summary, if you give the password for user ```end``` as argument to ```bonus3
 
 But we don't know the password yet so...
 
-Investigating with gdb we find just ```main()```. ```main()``` reads ```/home/user/end/.pass``` and copies into a buffer twice. Then ```strcmp()``` compares the buffer and argv[1], opening a shell if you have provided a matching password. However ```strcmp()``` will only read and compare as many bytes as len(argv[1]), so if we provide an empty string it returns 0, claiming the strings are the same (for as many bytes read).
+Investigating with gdb we find just ```main()```. ```main()``` opens ```/home/user/end/.pass``` and copies the password into a buffer twice. Then ```strcmp()``` compares the buffer and argv[1], opening a shell if you have provided the matching password. However ```strcmp()``` will only read and compare as many bytes as len(argv[1]), so if we provide an empty string ```strcmp()``` returns 0, claiming the password and empty string are the same (for as many bytes as read - 0).
 ```
 bonus3@RainFall:~$ ./bonus3 ""
 $ whoami
@@ -42,3 +42,6 @@ end@RainFall:~$ ls -l
 end@RainFall:~$ cat end
 Congratulations graduate!
 ```
+Maybe should have used ```strncmp()``` instead of ```strcmp()```.
+
+Anways Congratulations graduate!
