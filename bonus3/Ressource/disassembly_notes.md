@@ -18,7 +18,7 @@ Dump of assembler code for function main:
    0x08048513 <+31>:	call   0x8048410 <fopen@plt>    ; fopen("/home/user/end/.pass", "r");
    0x08048518 <+36>:	mov    %eax,0x9c(%esp)          ; store fopen() return, pointer to password file
 
-   0x0804851f <+43>:	lea    0x18(%esp),%ebx          ; buffer address
+   0x0804851f <+43>:	lea    0x18(%esp),%ebx          ; buffer, 0x9c - 0x18 = 132 bytes
    0x08048523 <+47>:	mov    $0x0,%eax                ; load value (0), initialize buffer to 0
    0x08048528 <+52>:	mov    $0x21,%edx               ; 0x21 * 4 = 132 bytes len to write
    0x0804852d <+57>:	mov    %ebx,%edi
