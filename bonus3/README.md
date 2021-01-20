@@ -11,7 +11,7 @@ We find a binary with owner ```end``` and SUID.
 bonus3@RainFall:~$ ls -l
 -rwsr-s---+ 1 end users 5595 Mar  6  2016 bonus3
 ```
-When run with 1 argument, it prints a new line. Run with 0 or >1 arguments it does nothing.
+When run with 1 argument, it prints a new line. Run with 0 or 2 =< arguments it does nothing.
 ```
 bonus3@RainFall:~$ ./bonus3
 bonus3@RainFall:~$ ./bonus3 Yes!
