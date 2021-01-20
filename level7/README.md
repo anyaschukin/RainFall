@@ -135,7 +135,7 @@ level8@RainFall:/tmp$ chmod +wx ~; mv level7_source ~
 Exit back to user level7, then run the binary. <br/>
 Notes: 
 - Our new address for ```m()``` is located at 0x08048514 (but we still print the address in little endian).
-- Our new address for ```puts()``` is located at 0x8048420 => 0x804a014 (in the GOT)
+- Our new address for ```puts()``` is located at 0x8048420 => 0x0804a014 (in the GOT)
 ```
 level8@RainFall:/tmp$ exit
 exit
