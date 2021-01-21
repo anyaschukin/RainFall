@@ -43,7 +43,7 @@ Dump of assembler code for function p:
    0x08048522 <+78>:	call   0x80483d0 <_exit@plt>  ; call exit(1)
    
    0x08048527 <+83>:	lea    -0x4c(%ebp),%eax       ; load address bp-0x4c in eax (puts() takes a pointer as argument)
-   0x0804852a <+86>:	mov    %eax,(%esp)            ; set argument 1 - buffer
+   0x0804852a <+86>:	mov    %eax,(%esp)            ; load argument 1 - buffer
    0x0804852d <+89>:	call   0x80483f0 <puts@plt>   ; call puts(buffer)
    
    0x08048532 <+94>:	lea    -0x4c(%ebp),%eax
