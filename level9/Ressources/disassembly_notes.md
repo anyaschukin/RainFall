@@ -20,17 +20,18 @@ Dump of assembler code for function main:
    
    0x080485fe <+10>:	cmpl   $0x1,0x8(%ebp)           ; is argc > 1 ?
    0x08048602 <+14>:	jg     0x8048610 <main+28>      ; jump to main+28 if argc > 1
-   0x08048604 <+16>:	movl   $0x1,(%esp)              ; set argument 1 for exit = 1
+   0x08048604 <+16>:	movl   $0x1,(%esp)              ; set argument 1, of exit = 1
    0x0804860b <+23>:	call   0x80484f0 <_exit@plt>    ; else exit (1)
    
-   0x08048610 <+28>:	movl   $0x6c,(%esp)             ; esp is now a pointer to value 108
-   0x08048617 <+35>:	call   0x8048530 <_Znwj@plt>    ;  <operator new(unsigned int)@plt>
-   0x0804861c <+40>:	mov    %eax,%ebx
+   0x08048610 <+28>:	movl   $0x6c,(%esp)              ; esp is now a pointer to value 108
+   0x08048617 <+35>:	call   0x8048530 <_Znwj@plt>     ;  <operator new(unsigned int)@plt>
+   0x0804861c <+40>:	mov    %eax,%ebx                 ; return a = new(108)
    
-   0x0804861e <+42>:	movl   $0x5,0x4(%esp)
-   0x08048626 <+50>:	mov    %ebx,(%esp)
-   0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>    ; N::N(int)
+   0x0804861e <+42>:	movl   $0x5,0x4(%esp)           ; set argument 2, of value 5
+   0x08048626 <+50>:	mov    %ebx,(%esp)              ; set argument 1, of class 
+   0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>    ; N::N(int) constructor
    0x0804862e <+58>:	mov    %ebx,0x1c(%esp)
+   
    0x08048632 <+62>:	movl   $0x6c,(%esp)
    0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>    ; <operator new(unsigned int)@plt>
    0x0804863e <+74>:	mov    %eax,%ebx
