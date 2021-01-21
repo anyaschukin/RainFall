@@ -11,15 +11,15 @@ We find a binary with owner ```level3``` and SUID.
 level2@RainFall:~$ ls -l
 -rwsr-s---+ 1 level3 users 5403 Mar  6  2016 level2
 ```
-
-## Solution
-
 Running the binary, it seems to read from stdin, and print what is given.
 ```
 level2@RainFall:~$ ./level2
 oh hi
 oh hi
 ```
+
+## Solution
+
 After a certain length of input it segfaults.
 ```
 level2@RainFall:~$ ./level2
