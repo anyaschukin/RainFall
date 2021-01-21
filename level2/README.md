@@ -40,6 +40,9 @@ level2@RainFall:~$ gdb -q level2
    0x080484ed <+25>:	call   0x80483c0 <gets@plt>
 ...
 ```
+
+### Find EIP offset
+
 Using the following example with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the EIP offset is 80.
 ```
 level2@RainFall:~$ gdb -q level2
@@ -53,6 +56,8 @@ Program received signal SIGSEGV, Segmentation fault.
 0x37634136 in ?? ()
 ```
 This means we can write our malicious code in the stdin, followed by garbage until the buffer overflows and we reach 80 characters, where the return address can be overwritten.
+
+### Find target address
 
 However, this buffer is stored on the stack, unfortunately function ```p``` checks to make sure the return address isn't in the stack.
 ```
@@ -81,11 +86,7 @@ ltrace also shows us strdup always uses the address ```0x804a008```, this indica
 
 So let's try to write our malicious shellcode in the heap by writing it in the input prompt. Then write the strdup malloc address on the return address.
 
-Our malicious shellcode simply needs to open a new shell. To execute a program we use system call execve(), we find the unix syscall for execve is 11.
-```
-level2@RainFall:~$ cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep "execve"
-#define __NR_execve		 11
-```
+### Build exploit string
 
 Using [this compact system call opening a shell](http://shell-storm.org/shellcode/files/shellcode-827.php) we create our malicious bytecode.
 ```
