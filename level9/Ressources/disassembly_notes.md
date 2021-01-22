@@ -12,36 +12,36 @@ Let's take a deeper look at ```main()```.
 (gdb) disas main
 Dump of assembler code for function main:
    0x080485f4 <+0>:	push   %ebp
-   0x080485f5 <+1>:	mov    %esp,%ebp                                ; initialize stack
+   0x080485f5 <+1>:	mov    %esp,%ebp                             ; initialize stack
    
    0x080485f7 <+3>:	push   %ebx
    0x080485f8 <+4>:	and    $0xfffffff0,%esp
-   0x080485fb <+7>:	sub    $0x20,%esp                               ; allocates 32 bytes for main()'s local variables
+   0x080485fb <+7>:	sub    $0x20,%esp                            ; allocates 32 bytes for main()'s local variables
    
-   0x080485fe <+10>:	cmpl   $0x1,0x8(%ebp)                           ; is argc > 1 ?
-   0x08048602 <+14>:	jg     0x8048610 <main+28>                      ; jump to main+28 if argc > 1
-   0x08048604 <+16>:	movl   $0x1,(%esp)                              ; set argument 1, of exit = 1
-   0x0804860b <+23>:	call   0x80484f0 <_exit@plt>                    ; else exit (1)
+   0x080485fe <+10>:	cmpl   $0x1,0x8(%ebp)                        ; is argc > 1 ?
+   0x08048602 <+14>:	jg     0x8048610 <main+28>                   ; jump to main+28 if argc > 1
+   0x08048604 <+16>:	movl   $0x1,(%esp)                           ; set argument 1, of exit = 1
+   0x0804860b <+23>:	call   0x80484f0 <_exit@plt>                 ; else exit (1)
    
-   0x08048610 <+28>:	movl   $0x6c,(%esp)                             ; esp is now a pointer to value 108
-   0x08048617 <+35>:	call   0x8048530 <_Znwj@plt>                    ;  <operator new(unsigned int)@plt>
-   0x0804861c <+40>:	mov    %eax,%ebx                                ; return a = new(108)
+   0x08048610 <+28>:	movl   $0x6c,(%esp)                          ; esp is now a pointer to value 108
+   0x08048617 <+35>:	call   0x8048530 <_Znwj@plt>                 ;  <operator new(unsigned int)@plt>
+   0x0804861c <+40>:	mov    %eax,%ebx                             ; return a = new(108)
    
-   0x0804861e <+42>:	movl   $0x5,0x4(%esp)                           ; set argument 2, of value 5
-   0x08048626 <+50>:	mov    %ebx,(%esp)                              ; set argument 1, of class 
-   0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>                    ; N::N(int) constructor
-   0x0804862e <+58>:	mov    %ebx,0x1c(%esp)                          ; a = new N(5)
+   0x0804861e <+42>:	movl   $0x5,0x4(%esp)                        ; set argument 2, of value 5
+   0x08048626 <+50>:	mov    %ebx,(%esp)                           ; set argument 1, of class 
+   0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>                 ; N::N(int) constructor
+   0x0804862e <+58>:	mov    %ebx,0x1c(%esp)                       ; a = new N(5)
    
-   0x08048632 <+62>:	movl   $0x6c,(%esp)                             ; esp is now a pointer to value 108
-   0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>                    ; <operator new(unsigned int)@plt>
-   0x0804863e <+74>:	mov    %eax,%ebx                                ; return b = new(108)
+   0x08048632 <+62>:	movl   $0x6c,(%esp)                          ; esp is now a pointer to value 108
+   0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>                 ; <operator new(unsigned int)@plt>
+   0x0804863e <+74>:	mov    %eax,%ebx                             ; return b = new(108)
    
-   0x08048640 <+76>:	movl   $0x6,0x4(%esp)                           ; set argument 2, of value 6
-   0x08048648 <+84>:	mov    %ebx,(%esp)                              ; set argument 1, of class 
-   0x0804864b <+87>:	call   0x80486f6 <_ZN1NC2Ei>                    ; <N::N(int)>
-   0x08048650 <+92>:	mov    %ebx,0x18(%esp)                          ; b = new N(6)
+   0x08048640 <+76>:	movl   $0x6,0x4(%esp)                        ; set argument 2, of value 6
+   0x08048648 <+84>:	mov    %ebx,(%esp)                           ; set argument 1, of class 
+   0x0804864b <+87>:	call   0x80486f6 <_ZN1NC2Ei>                 ; <N::N(int)>
+   0x08048650 <+92>:	mov    %ebx,0x18(%esp)                       ; b = new N(6)
    
-   0x08048654 <+96>:	mov    0x1c(%esp),%eax                          ; move the first N object into esp+0x1c           
+   0x08048654 <+96>:	mov    0x1c(%esp),%eax                       ; move the first N object into esp+0x1c           
    0x08048658 <+100>:	mov    %eax,0x14(%esp)                       ; save that in esp+0x14     
    0x0804865c <+104>:	mov    0x18(%esp),%eax                       ; move the second N object into esp+0x18
    0x08048660 <+108>:	mov    %eax,0x10(%esp)                       ; save that in esp+0x10
