@@ -72,6 +72,7 @@ Dump of assembler code for function main:
 End of assembler dump.
 ```
 
+
 ```
 (gdb) disas _Znwj
 Dump of assembler code for function _Znwj@plt:
@@ -80,7 +81,7 @@ Dump of assembler code for function _Znwj@plt:
    0x0804853b <+11>:	jmp    0x80484a0
 ```
 
-
+N::N(int)
 ```
 (gdb) disas _ZN1NC2Ei
 Dump of assembler code for function _ZN1NC2Ei:
@@ -96,8 +97,53 @@ Dump of assembler code for function _ZN1NC2Ei:
 End of assembler dump.
 ```
 
+N::operator+(N&)
 ```
-(gdb) disas _ZN1N13setAnnotationEPc
+level9@RainFall:~$ objdump -CS level9
+0804873a <N::operator+(N&)>:
+ 804873a:	55                   	push   %ebp
+ 804873b:	89 e5                	mov    %esp,%ebp
+ 804873d:	8b 45 08             	mov    0x8(%ebp),%eax
+ 8048740:	8b 50 68             	mov    0x68(%eax),%edx
+ 8048743:	8b 45 0c             	mov    0xc(%ebp),%eax
+ 8048746:	8b 40 68             	mov    0x68(%eax),%eax
+ 8048749:	01 d0                	add    %edx,%eax
+ 804874b:	5d                   	pop    %ebp
+ 804874c:	c3                   	ret
+ 804874d:	90                   	nop
+```
+
+N::operator-(N&)
+```
+level9@RainFall:~$ objdump -CS level9
+0804874e <N::operator-(N&)>:
+ 804874e:	55                   	push   %ebp
+ 804874f:	89 e5                	mov    %esp,%ebp
+ 8048751:	8b 45 08             	mov    0x8(%ebp),%eax
+ 8048754:	8b 50 68             	mov    0x68(%eax),%edx
+ 8048757:	8b 45 0c             	mov    0xc(%ebp),%eax
+ 804875a:	8b 40 68             	mov    0x68(%eax),%eax
+ 804875d:	89 d1                	mov    %edx,%ecx
+ 804875f:	29 c1                	sub    %eax,%ecx
+ 8048761:	89 c8                	mov    %ecx,%eax
+ 8048763:	5d                   	pop    %ebp
+ 8048764:	c3                   	ret
+ 8048765:	90                   	nop
+ 8048766:	90                   	nop
+ 8048767:	90                   	nop
+ 8048768:	90                   	nop
+ 8048769:	90                   	nop
+ 804876a:	90                   	nop
+ 804876b:	90                   	nop
+ 804876c:	90                   	nop
+ 804876d:	90                   	nop
+ 804876e:	90                   	nop
+ 804876f:	90                   	nop
+```
+
+N::setAnnotation(char*)
+```
+(gdb) disas _ZN1N13setAnnotationEPc 
 Dump of assembler code for function _ZN1N13setAnnotationEPc:
    0x0804870e <+0>:	push   %ebp
    0x0804870f <+1>:	mov    %esp,%ebp
@@ -111,7 +157,7 @@ Dump of assembler code for function _ZN1N13setAnnotationEPc:
    0x08048729 <+27>:	mov    0xc(%ebp),%eax
    0x0804872c <+30>:	mov    %eax,0x4(%esp)
    0x08048730 <+34>:	mov    %edx,(%esp)
-   0x08048733 <+37>:	call   0x8048510 <memcpy@plt>
+   0x08048733 <+37>:	call   0x8048510 <memcpy@plt>                   ; memcpy(this->annotation, str, strlen(str));
    0x08048738 <+42>:	leave
    0x08048739 <+43>:	ret
 End of assembler dump.
