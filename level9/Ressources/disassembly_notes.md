@@ -78,11 +78,13 @@ End of assembler dump.
 Dump of assembler code for function _ZN1NC2Ei:
    0x080486f6 <+0>:	push   %ebp
    0x080486f7 <+1>:	mov    %esp,%ebp
-   0x080486f9 <+3>:	mov    0x8(%ebp),%eax
-   0x080486fc <+6>:	movl   $0x8048848,(%eax)
+   
+   0x080486f9 <+3>:	mov    0x8(%ebp),%eax                           ; eax = N obj passed as parameter
+   0x080486fc <+6>:	movl   $0x8048848,(%eax)                        ; 
    0x08048702 <+12>:	mov    0x8(%ebp),%eax
-   0x08048705 <+15>:	mov    0xc(%ebp),%edx
-   0x08048708 <+18>:	mov    %edx,0x68(%eax)
+   0x08048705 <+15>:	mov    0xc(%ebp),%edx                           ; the second parameter (int 5 or 6)
+   0x08048708 <+18>:	mov    %edx,0x68(%eax)                          ; N[0x68]
+   
    0x0804870b <+21>:	pop    %ebp
    0x0804870c <+22>:	ret
 End of assembler dump.
