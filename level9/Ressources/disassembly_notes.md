@@ -142,7 +142,7 @@ level9@RainFall:~$ objdump -CS level9
 ```
 
 
-**N::setAnnotation(char*)** :
+**N::setAnnotation(char\*)** :
 ```
 (gdb) disas _ZN1N13setAnnotationEPc 
 Dump of assembler code for function _ZN1N13setAnnotationEPc:
