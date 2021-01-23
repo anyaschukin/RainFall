@@ -71,7 +71,8 @@ Dump of assembler code for function main:
    0x08048699 <+165>:	ret
 End of assembler dump.
 ```
-<br/>
+
+
 **N::N(int)** :
 ```
 (gdb) disas _ZN1NC2Ei
@@ -89,7 +90,8 @@ Dump of assembler code for function _ZN1NC2Ei:
    0x0804870c <+22>:	ret
 End of assembler dump.
 ```
-<br/>
+
+
 **N::operator+(N&)** :
 ```
 level9@RainFall:~$ objdump -CS level9
@@ -107,7 +109,8 @@ level9@RainFall:~$ objdump -CS level9
  804874c:	c3                   	ret
  804874d:	90                   	nop
 ```
-<br/>
+
+
 **N::operator-(N&)** :
 ```
 level9@RainFall:~$ objdump -CS level9
@@ -137,7 +140,8 @@ level9@RainFall:~$ objdump -CS level9
  804876e:	90                   	nop
  804876f:	90                   	nop
 ```
-<br/>
+
+
 **N::setAnnotation(char*)** :
 ```
 (gdb) disas _ZN1N13setAnnotationEPc 
