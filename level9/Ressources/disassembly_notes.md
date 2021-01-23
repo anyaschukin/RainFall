@@ -72,16 +72,7 @@ Dump of assembler code for function main:
 End of assembler dump.
 ```
 
-
-```
-(gdb) disas _Znwj
-Dump of assembler code for function _Znwj@plt:
-   0x08048530 <+0>:	jmp    *0x8049b70
-   0x08048536 <+6>:	push   $0x40
-   0x0804853b <+11>:	jmp    0x80484a0
-```
-
-N::N(int)
+**N::N(int)**
 ```
 (gdb) disas _ZN1NC2Ei
 Dump of assembler code for function _ZN1NC2Ei:
@@ -97,35 +88,39 @@ Dump of assembler code for function _ZN1NC2Ei:
 End of assembler dump.
 ```
 
-N::operator+(N&)
+**N::operator+(N&)**
 ```
 level9@RainFall:~$ objdump -CS level9
 0804873a <N::operator+(N&)>:
  804873a:	55                   	push   %ebp
  804873b:	89 e5                	mov    %esp,%ebp
+ 
  804873d:	8b 45 08             	mov    0x8(%ebp),%eax
- 8048740:	8b 50 68             	mov    0x68(%eax),%edx
+ 8048740:	8b 50 68             	mov    0x68(%eax),%edx           ; a->value
  8048743:	8b 45 0c             	mov    0xc(%ebp),%eax
- 8048746:	8b 40 68             	mov    0x68(%eax),%eax
- 8048749:	01 d0                	add    %edx,%eax
+ 8048746:	8b 40 68             	mov    0x68(%eax),%eax           ; b->value
+ 8048749:	01 d0                	add    %edx,%eax                 ; return a->value + b->value
+ 
  804874b:	5d                   	pop    %ebp
  804874c:	c3                   	ret
  804874d:	90                   	nop
 ```
 
-N::operator-(N&)
+**N::operator-(N&)**
 ```
 level9@RainFall:~$ objdump -CS level9
 0804874e <N::operator-(N&)>:
  804874e:	55                   	push   %ebp
  804874f:	89 e5                	mov    %esp,%ebp
+ 
  8048751:	8b 45 08             	mov    0x8(%ebp),%eax
- 8048754:	8b 50 68             	mov    0x68(%eax),%edx
+ 8048754:	8b 50 68             	mov    0x68(%eax),%edx           ; a->value
  8048757:	8b 45 0c             	mov    0xc(%ebp),%eax
- 804875a:	8b 40 68             	mov    0x68(%eax),%eax
+ 804875a:	8b 40 68             	mov    0x68(%eax),%eax           ; b->value
  804875d:	89 d1                	mov    %edx,%ecx
  804875f:	29 c1                	sub    %eax,%ecx
- 8048761:	89 c8                	mov    %ecx,%eax
+ 8048761:	89 c8                	mov    %ecx,%eax                 ; return a->value + b->value
+ 
  8048763:	5d                   	pop    %ebp
  8048764:	c3                   	ret
  8048765:	90                   	nop
@@ -141,23 +136,26 @@ level9@RainFall:~$ objdump -CS level9
  804876f:	90                   	nop
 ```
 
-N::setAnnotation(char*)
+**N::setAnnotation(char*)**
 ```
 (gdb) disas _ZN1N13setAnnotationEPc 
 Dump of assembler code for function _ZN1N13setAnnotationEPc:
    0x0804870e <+0>:	push   %ebp
    0x0804870f <+1>:	mov    %esp,%ebp
+   
    0x08048711 <+3>:	sub    $0x18,%esp
    0x08048714 <+6>:	mov    0xc(%ebp),%eax
    0x08048717 <+9>:	mov    %eax,(%esp)
-   0x0804871a <+12>:	call   0x8048520 <strlen@plt>
-   0x0804871f <+17>:	mov    0x8(%ebp),%edx
-   0x08048722 <+20>:	add    $0x4,%edx
+   0x0804871a <+12>:	call   0x8048520 <strlen@plt>                   ; len = strlen(str)
+   
+   0x0804871f <+17>:	mov    0x8(%ebp),%edx                           ; this
+   0x08048722 <+20>:	add    $0x4,%edx                                ; this->annotation
    0x08048725 <+23>:	mov    %eax,0x8(%esp)
    0x08048729 <+27>:	mov    0xc(%ebp),%eax
    0x0804872c <+30>:	mov    %eax,0x4(%esp)
    0x08048730 <+34>:	mov    %edx,(%esp)
-   0x08048733 <+37>:	call   0x8048510 <memcpy@plt>                   ; memcpy(this->annotation, str, strlen(str));
+   0x08048733 <+37>:	call   0x8048510 <memcpy@plt>                   ; memcpy(this->annotation, str, len);
+   
    0x08048738 <+42>:	leave
    0x08048739 <+43>:	ret
 End of assembler dump.
