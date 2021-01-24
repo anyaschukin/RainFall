@@ -25,21 +25,21 @@ Dump of assembler code for function main:
    
    0x08048610 <+28>:	movl   $0x6c,(%esp)                          ; esp is now a pointer to value 108
    0x08048617 <+35>:	call   0x8048530 <_Znwj@plt>                 ;  <operator new(unsigned int)@plt>
-   0x0804861c <+40>:	mov    %eax,%ebx                             ; return a = new(108)
+   0x0804861c <+40>:	mov    %eax,%ebx                             ; return n1 = new(108)
    
    0x0804861e <+42>:	movl   $0x5,0x4(%esp)                        ; set argument 2, of value 5
    0x08048626 <+50>:	mov    %ebx,(%esp)                           ; set argument 1, of class 
    0x08048629 <+53>:	call   0x80486f6 <_ZN1NC2Ei>                 ; N::N(int) constructor
-   0x0804862e <+58>:	mov    %ebx,0x1c(%esp)                       ; a = new N(5)
+   0x0804862e <+58>:	mov    %ebx,0x1c(%esp)                       ; n1 = new N(5)
    
    0x08048632 <+62>:	movl   $0x6c,(%esp)                          ; esp is now a pointer to value 108
    0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>                 ; <operator new(unsigned int)@plt>
-   0x0804863e <+74>:	mov    %eax,%ebx                             ; return b = new(108)
+   0x0804863e <+74>:	mov    %eax,%ebx                             ; return n2 = new(108)
    
    0x08048640 <+76>:	movl   $0x6,0x4(%esp)                        ; set argument 2, of value 6
    0x08048648 <+84>:	mov    %ebx,(%esp)                           ; set argument 1, of class 
    0x0804864b <+87>:	call   0x80486f6 <_ZN1NC2Ei>                 ; <N::N(int)>
-   0x08048650 <+92>:	mov    %ebx,0x18(%esp)                       ; b = new N(6)
+   0x08048650 <+92>:	mov    %ebx,0x18(%esp)                       ; n2 = new N(6)
    
    0x08048654 <+96>:	mov    0x1c(%esp),%eax                       ; move the first N object into esp+0x1c           
    0x08048658 <+100>:	mov    %eax,0x14(%esp)                       ; save that in esp+0x14     
@@ -55,8 +55,8 @@ Dump of assembler code for function main:
    0x08048674 <+128>:	mov    %eax,(%esp)                           ; set argv[1] as second argument
    0x08048677 <+131>:	call   0x804870e <_ZN1N13setAnnotationEPc>   ; <N::setAnnotation(char*)>
    
-   0x0804867c <+136>:	mov    0x10(%esp),%eax                       ; eax = *b
-   0x08048680 <+140>:	mov    (%eax),%eax                           ; eax = *eax (aka eax = b->method)
+   0x0804867c <+136>:	mov    0x10(%esp),%eax                       ; eax = *n2
+   0x08048680 <+140>:	mov    (%eax),%eax                           ; eax = *eax (aka eax = n2->method)
    0x08048682 <+142>:	mov    (%eax),%edx                           ; edx = *->method()
    
    0x08048684 <+144>:	mov    0x14(%esp),%eax
@@ -64,7 +64,7 @@ Dump of assembler code for function main:
    0x0804868c <+152>:	mov    0x10(%esp),%eax
    0x08048690 <+156>:	mov    %eax,(%esp)                           ; set arguments
    
-   0x08048693 <+159>:	call   *%edx                                 ; *b->method(*b, *a) or b->method[0](*b, *a)
+   0x08048693 <+159>:	call   *%edx                                 ; *n2->method(*n2, *n1) or n2->method[0](*n2, *n1)
    0x08048695 <+161>:	mov    -0x4(%ebp),%ebx                       ; store the return of main() in ebx
    
    0x08048698 <+164>:	leave                                        ; exit the function   
@@ -100,10 +100,10 @@ level9@RainFall:~$ objdump -CS level9
  804873b:	89 e5                	mov    %esp,%ebp
  
  804873d:	8b 45 08             	mov    0x8(%ebp),%eax
- 8048740:	8b 50 68             	mov    0x68(%eax),%edx           ; a->value
+ 8048740:	8b 50 68             	mov    0x68(%eax),%edx           ; n1->value
  8048743:	8b 45 0c             	mov    0xc(%ebp),%eax
- 8048746:	8b 40 68             	mov    0x68(%eax),%eax           ; b->value
- 8048749:	01 d0                	add    %edx,%eax                 ; return a->value + b->value
+ 8048746:	8b 40 68             	mov    0x68(%eax),%eax           ; n2->value
+ 8048749:	01 d0                	add    %edx,%eax                 ; return n1->value + n2->value
  
  804874b:	5d                   	pop    %ebp
  804874c:	c3                   	ret
@@ -119,12 +119,12 @@ level9@RainFall:~$ objdump -CS level9
  804874f:	89 e5                	mov    %esp,%ebp
  
  8048751:	8b 45 08             	mov    0x8(%ebp),%eax
- 8048754:	8b 50 68             	mov    0x68(%eax),%edx           ; a->value
+ 8048754:	8b 50 68             	mov    0x68(%eax),%edx           ; n1->value
  8048757:	8b 45 0c             	mov    0xc(%ebp),%eax
- 804875a:	8b 40 68             	mov    0x68(%eax),%eax           ; b->value
+ 804875a:	8b 40 68             	mov    0x68(%eax),%eax           ; n2->value
  804875d:	89 d1                	mov    %edx,%ecx
  804875f:	29 c1                	sub    %eax,%ecx
- 8048761:	89 c8                	mov    %ecx,%eax                 ; return a->value + b->value
+ 8048761:	89 c8                	mov    %ecx,%eax                 ; return n1->value + n2->value
  
  8048763:	5d                   	pop    %ebp
  8048764:	c3                   	ret
