@@ -49,7 +49,7 @@ The next step is to look for where we can regain control
 ```objdump``` will give us a deeper look at the assembly instructions in this binary file. 
 We use the ```-M intel``` flag for Intel syntax. 
 ```
-level1@RainFall:~$  objdump -d -M intel level1
+level1@RainFall:~$ objdump -d -M intel level1
 [...]
 08048444 <run>:
 [...]
