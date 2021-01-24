@@ -34,11 +34,11 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 AAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBB�� BBBBBBBBBBBBBBBBBBBB��
 Segmentation fault (core dumped)
 ```
-Investigating with gdb we find main calls ```pp()```. 
-```pp()``` calls ```p()``` twice (which reads from stdin) and ```strcpy()```.
+Investigating with gdb we find main calls ```pp()```.  <br />
+```pp()``` calls ```p()``` twice (which reads from stdin) and ```strcpy()```. <br />
 
-```p``` reads 4096 bytes into a buffer, then uses ```strncpy()``` to return the first 20 bytes.
-```strncpy()```'s return is not null-terminated if the source is longer than destination.
+```p``` reads 4096 bytes into a buffer, then uses ```strncpy()``` to return the first 20 bytes. <br />
+```strncpy()```'s return is not null-terminated if the source is longer than destination. <br />
 
 Then, ```pp()``` calls ```strcpy()``` on ```strncpy()```'s return string... but it's not null-terminated soooooooooooo THINGS
 
