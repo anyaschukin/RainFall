@@ -74,6 +74,11 @@ All defined functions:
 ```
 Unfortunately, the real address of ```exit()``` is in the GOT. Let's looks there. 
 ```
+(gdb) x/i 0x080483d0
+   0x80483d0 <exit@plt>:	jmp    *0x8049838
+
+[you can also use ojbdump, like so...]
+
 level5@RainFall:~$ objdump -R level5 | grep exit
 08049838 R_386_JUMP_SLOT   exit
 ```
