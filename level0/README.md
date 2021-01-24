@@ -61,18 +61,17 @@ Password: 1fe8a524fa4bec01ca4ea2a869af2a02260d4a7d5fe7e7c24d8617e6dca12d3a
 
 ## Recreate exploited binary
 
-As user level1, create ```source_level0.c```, then compile in /tmp/
+As user ```level1``` in /tmp, create and compile ```level0_source.c```.
 ```
-level1@RainFall:~$ gcc source_level0.c -o /tmp/source_level0
+level1@RainFall:/tmp$ gcc level0_source.c -o level0_source
 ```
 Edit permissions including suid, then move the binary to home directory.
 ```
-level1@RainFall:~$ chmod u+s /tmp/source_level0
-level1@RainFall:~$ mv /tmp/source_level0 .
+level1@RainFall:/tmp$ chmod u+s level0_source; chmod +wx ~; mv level0_source ~
 ```
 Exit back to user level0, then run the binary.
 ```
-level1@RainFall:~$ exit
+level1@RainFall:/tmp$ exit
 exit
-level0@RainFall:~$ /home/user/level1/source_level0 423
+level0@RainFall:~$ /home/user/level1/level0_source 423
 ```
