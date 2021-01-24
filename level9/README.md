@@ -93,6 +93,7 @@ Starting program: /home/user/level9/level9 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1A
 
 Program received signal SIGSEGV, Segmentation fault.
 0x08048682 in main ()
+
 (gdb) info register eax
 eax            0x41366441	1094083649
 ```
