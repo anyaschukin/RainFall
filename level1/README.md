@@ -37,16 +37,19 @@ Dump of assembler code for function main:
 End of assembler dump.
 (gdb)
 ```
-We can see here the binary calls the C function ```gets```, which copies a string from stdin to a buffer. 
-Let's see if we can cause a buffer overflow. A buffer overflow allows us to change the flow of execution of the program.
+We can see here the binary calls the C function ```gets```, which copies a string from stdin to a buffer. <br/>
+Let's see if we can cause a buffer overflow. A buffer overflow allows us to change the flow of execution of the program.  <br/>
+In this case, if we overflow the ```gets()``` buffer, we can overwrite the ```return``` call and insert our own malicious code in its place. 
+
 ```
 level1@RainFall:~$ python -c 'print "a"*76' | ./level1
 Illegal instruction (core dumped)
 ```
-So we've effectively triggered a stack overflow here.
-The next step is to look for where we can regain control
+So we've effectively triggered a stack overflow here by printing 76 characters. <br/>
+We can confirm the EIP is at offset 76 by using gdb and [this EIP offet tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/). <br/>
+The next step is to look for where we can regain control. <br/>
 
-```objdump``` will give us a deeper look at the assembly instructions in this binary file. 
+```objdump``` will give us a deeper look at the assembly instructions in this binary file. <br/>
 We use the ```-M intel``` flag for Intel syntax. 
 ```
 level1@RainFall:~$ objdump -d -M intel level1
@@ -55,7 +58,7 @@ level1@RainFall:~$ objdump -d -M intel level1
 [...]
 8048479:	e8 e2 fe ff ff       	call   8048360 <system@plt>
 ```
-Here we find a run command and ```system()``` call that we can exploit. 
+Here we find a function ```run()``` with a ```system()``` call that we can exploit. <br/>
 If we run system("/bin/sh"), [it will launch a shell](https://stackoverflow.com/questions/43294227/hijacking-system-bin-sh-to-run-arbitrary-commands) that will run with the same priveleges as the calling program. 
 
 
