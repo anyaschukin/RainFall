@@ -84,10 +84,13 @@ level9@RainFall:~$ gdb -q level9
 
 We need to find out how many bytes we write in ```n1``` before we overflow into ```n2```? ```n2``` corresponds to register ```eax``` at time of segfault.
 
-Lets run the binary with our a pattern string from our favorite [EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/)
+Lets run the binary with our a pattern string from our favorite [EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/) and make it segfault.
 ```
 (gdb) run Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6A
-...
+Starting program: /home/user/level9/level9 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6A
+
+Program received signal SIGSEGV, Segmentation fault.
+0x08048682 in main ()
 (gdb) info register eax
 eax            0x41366441	1094083649
 ```
