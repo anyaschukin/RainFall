@@ -64,7 +64,7 @@ However, because we created ```n2``` after ```n1``` on the heap, we can use the 
 
 ### Find buffer address
 
-We need to find the address of buffer ```n1```. In gdb, in the main we find the instruction after the call to ```setAnnotation()``` is ```*main+136```. Put a break point at ```*main+136```, and run with a 4 byte argument ("BUFF"). Displaying the memory at %eax we find our argument stored in the buffer at ```0x804a00c```
+We need to find the address of ```n1```. In gdb, in the main we find the instruction after the call to ```n1->setAnnotation()``` is ```*main+136```. Put a break point at ```*main+136```, and run with a 4 byte argument ("BUFF"). Displaying the memory at %eax we find our argument stored in the buffer at ```0x804a00c```
 ```
 level9@RainFall:~$ gdb -q level9
 ...
