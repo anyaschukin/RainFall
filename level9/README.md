@@ -51,18 +51,24 @@ Finally ```main()``` adds ```n1``` + ```n2```.
 
 ### Route to solution
 
-Can we simply (like previous levels) write our [malicious code which opens a shell](http://shell-storm.org/shellcode/files/shellcode-827.php) in buffer ```n1->annotation```, then overwrite EIP with the address of our malicious code? Unfortunately, using the following example and [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we don't seem to be able to reach and overwrite EIP.
+Can we simply (like previous levels) write our [malicious code which opens a shell](http://shell-storm.org/shellcode/files/shellcode-827.php) in buffer ```n1->annotation```, then overwrite EIP with the address of our malicious code? Unfortunately, we can't reach and overwrite EIP... as shown in the following example used with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/).
 ```
 (gdb) run Aa0Aa1Aa2Aa3Aa4...
 ...
 Program received signal SIGSEGV, Segmentation fault.
 0x08048682 in main ()
 ```
-However, because we created ```n2``` after ```n1``` on the heap, we can use the ```memcpy()``` overflow to overwrite both ```n1``` and ```n2```. So can we write our malicious code in ```n1``` then overwrite ```n2``` with the address of our malicious code, then have ```main()``` call our malicious code for us when it adds? Not quite so simple...
+However, because we created ```n2``` after ```n1``` on the heap, we can use the ```memcpy()``` overflow to overwrite both ```n1``` and ```n2```. 
 
-```main()``` accesses ```n1->annotation``` dereferenced twice (a pointer to a pointer to contents), so we overwrite ```n2``` with the address of a pointer to our malicious code.
+We can't write our malicious code in ```n1``` then overwrite ```n2``` with the address of our malicious code, then have ```main()``` call our malicious code for us when it adds... because ```main()``` accesses ```n1->annotation``` dereferenced twice (a pointer to a pointer to contents). This means that we need a pointer to a pointer to our shell code. 
 
-### Find buffer address
+So the strategy here is:
+- write the address of our shell code + our shell code + a buffer in ```n1```
+- write the address of ```n1``` in ```n2```
+
+This means that we need to find ```n1```'s address and ```n2```'s offset from ```n1```.
+
+### Find n1 address
 
 We need to find the address of ```n1```. In gdb, in the main we find the instruction after the call to ```n1->setAnnotation()``` is ```*main+136```. Put a break point at ```*main+136```, and run with a 4 byte argument ("BUFF"). Displaying the memory at %eax we find our argument stored in the buffer at ```0x804a00c```
 ```
