@@ -26,11 +26,11 @@ For each level:
 
 * Level 6 - strcpy() buffer overflow
 
-* Level 7 - 
+* Level 7 - strcpy() buffer overflow
 
 * Level 8 - idiocy
 
-* Level 9 - 
+* Level 9 - memcpy() buffer overflow
 
 * bonus 0 - strcpy() buffer overflow
 
@@ -38,7 +38,7 @@ For each level:
 
 * bonus 2 - strcat() buffer overflow, exploit in env
 
-* bonus 3 - 
+* bonus 3 - strcmp() with empty argument
 
 ## Virtual Machine setup
 
