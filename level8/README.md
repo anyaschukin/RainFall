@@ -68,6 +68,8 @@ level9
 $ cat /home/user/level9/.pass
 c542e581c5ba5162a85f767996e3247ed619ef6c6f7b76a59435545dc6259f8a
 ```
+### Alternative solution
+
 Alternatively, create the ```auth``` pointer first, then a second calling ```service``` with any string at least 16 bytes long.
 ```
 auth I mean...
