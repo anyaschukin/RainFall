@@ -106,7 +106,7 @@ d3b7bf1025225bd715fa8ccb54ef06ca70b9125ac855aeab4878217177f41a31
 
 ## Recreate Exploited Binary
 
-As user level6, in /tmp, create and compile level5_source.c.
+As user ```level6```, in ```/tmp```, create and compile ```level5_source.c```.
 ```
 level6@RainFall:~$ cd /tmp
 level6@RainFall:/tmp$ gcc level5_source.c -fno-stack-protector -Wno-format-security -o level5_source
@@ -116,7 +116,7 @@ Edit permissions including suid, then move the binary to home directory.
 level6@RainFall:/tmp$ chmod u+s level5_source
 level6@RainFall:/tmp$ chmod +wx ~; mv level5_source ~
 ```
-Exit back to user level5, then run the binary. <br/>
+Exit back to user ```level5```, then run the binary. <br/>
 Notes: 
 - Our new address for ```exit()``` is located at 0x0804a014 (but we still print the address in little endian).
 - Our new address for ```o()``` is located at 0x080484c4 => 134513860 (minus the exit GOT address [4 bytes])
