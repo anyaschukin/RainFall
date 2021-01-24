@@ -55,15 +55,14 @@ Dump of assembler code for function main:
    0x08048674 <+128>:	mov    %eax,(%esp)                           ; set argv[1] as second argument
    0x08048677 <+131>:	call   0x804870e <_ZN1N13setAnnotationEPc>   ; <N::setAnnotation(char*)>
    
-   0x0804867c <+136>:	mov    0x10(%esp),%eax                       ; n2_ptr = n2
-   0x08048680 <+140>:	mov    (%eax),%eax
+   0x0804867c <+136>:	mov    0x10(%esp),%eax                       ; eax = n2
+   0x08048680 <+140>:	mov    (%eax),%eax                           ; n2_ptr = n2
    0x08048682 <+142>:	mov    (%eax),%edx
    
-   0x08048684 <+144>:	mov    0x14(%esp),%eax
-   0x08048688 <+148>:	mov    %eax,0x4(%esp)
+   0x08048684 <+144>:	mov    0x14(%esp),%eax                       ; eax = n1
+   0x08048688 <+148>:	mov    %eax,0x4(%esp)                        ; n1_ptr = n1
    0x0804868c <+152>:	mov    0x10(%esp),%eax
-   0x08048690 <+156>:	mov    %eax,(%esp)                           ; set arguments
-   
+   0x08048690 <+156>:	mov    %eax,(%esp)
    0x08048693 <+159>:	call   *%edx
    0x08048695 <+161>:	mov    -0x4(%ebp),%ebx                       ; store the return of main() in ebx
    
