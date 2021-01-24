@@ -46,9 +46,9 @@ Playing with these commands as input to ```level8``` we find the following:
 * ```reset```   : calls ```free()```, resets global variable auth.
 * ```login```   : If auth[32] is non-zero call ```system()```. Else ```fwrite()``` displays address of global variables ```auth``` and ```service```.
 
-malloc() places each pointer successively on the heap, with some padding. In this case we see 16 bytes between pointers.
+malloc() places each pointer successively on the heap, with some padding. In this case we see 16 bytes between pointers (0x804a018 - 0x804a008 = 16).
 
-To make auth[32] non-zero we can attempt to place our ```service``` variable 32 bytes after ```auth``` on the heap.
+To make auth[32] non-zero we can attempt to place our ```service``` variable 32 bytes after ```auth``` on the heap (0x804a028 - 0x804a008 = 32).
 
 Create the first pointer with command ```auth```, then a second calling ```service``` twice. We see ```service``` is now exactly 32 bytes after ```auth```.
 
