@@ -58,9 +58,9 @@ Can we simply (like previous levels) write our [malicious code which opens a she
 Program received signal SIGSEGV, Segmentation fault.
 0x08048682 in main ()
 ```
-However, because we created ```n2``` after ```n1``` on the heap, we can use the ```memcpy()``` overflow to overwrite both ```n1``` and ```n2```. So can we overwrite ```n2``` with the address of our malicious code in ```n1``` and have ```main()``` call our malicious code for us when it adds ? Not quite so simple...
+However, because we created ```n2``` after ```n1``` on the heap, we can use the ```memcpy()``` overflow to overwrite both ```n1``` and ```n2```. So can we write our malicious code in ```n1``` then overwrite ```n2``` with the address of our malicious code, then have ```main()``` call our malicious code for us when it adds? Not quite so simple...
 
-```main()``` accesses ```n1->annotation``` dereferenced twice (a pointer to a pointer to contents), so we overwrite ```n2``` with the address of a pointer to our maicious code.
+```main()``` accesses ```n1->annotation``` dereferenced twice (a pointer to a pointer to contents), so we overwrite ```n2``` with the address of a pointer to our malicious code.
 
 ### Find buffer address
 
