@@ -27,9 +27,9 @@ int main(int argc, char **argv) {
 	N *n1 = new N(5);
 	N *n2 = new N(6);
 
-	N *n_ptr1 = n1;
-	N *n_ptr2 = n2;
+	N *n1_ptr = n1;
+	N *n2_ptr = n2;
 
-	n_ptr1->setAnnotation(argv[1]);
-	return (*n_ptr2 + *n_ptr1);
+	n1_ptr->setAnnotation(argv[1]);
+	return (*n2_ptr + *n1_ptr);
 }
