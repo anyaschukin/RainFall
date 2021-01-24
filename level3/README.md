@@ -91,7 +91,7 @@ b209ea91ad69ef36f2cf0fcbbc24c739fd10464cf545b20bea8572ebdc3c36fa
 
 ## Recreate Exploited Binary
 
-As user level4, in /tmp, create and compile level3_source.c.
+As user ```level4```, in ```/tmp```, create and compile ```level3_source.c```.
 ```
 level4@RainFall:~$ cd /tmp
 level4@RainFall:/tmp$ gcc level3_source.c -fno-stack-protector -o level3_source
@@ -101,7 +101,7 @@ Edit permissions including suid, then move the binary to home directory.
 level4@RainFall:/tmp$ chmod u+s level3_source
 level4@RainFall:/tmp$ chmod +wx ~; mv level3_source ~
 ```
-Exit back to user level3, then run the binary. <br/>
+Exit back to user ```level3```, then run the binary. <br/>
 (Note: Our new variable ```m``` is located at 0x0804a04c, but we still print the address in little endian).
 ```
 level4@RainFall:/tmp$ exit
