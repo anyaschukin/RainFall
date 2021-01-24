@@ -80,9 +80,9 @@ level9@RainFall:~$ gdb -q level9
 0x804a00c:	 "BUFF"
 ```
 
-### Find function pointer address
+### Find n2 offset
 
-We need to find the offset of ```n2```, where we overwrite the function pointer which is executed by ```main()```. ```n2``` corresponds to register ```eax``` at time of segfault. How many bytes after the start of the buffer?
+We need to find out how many bytes we write in ```n1``` before we overflow into ```n2```? ```n2``` corresponds to register ```eax``` at time of segfault.
 
 Lets run the binary with our a pattern string from our favorite [EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/)
 ```
