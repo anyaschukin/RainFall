@@ -64,7 +64,7 @@ However, we can dynamically specify field width with modifier ```%d```  e.g. ```
 ### Build exploit string
 
 So we build our format string exploit:
-1. Address of glabal variable ```m``` (4 bytes)          - ```\x10\x98\x04\x08```
+1. Address of global variable ```m``` (4 bytes)          - ```\x10\x98\x04\x08```
 2. 16930112 bytes padding using ```%d```                 - ```%16930112d```
 3. store n bytes printed in 12th argument with ```%n```  - ```%12$n```
 
