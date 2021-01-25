@@ -41,6 +41,16 @@ Let's take a deeper look at the ```fopen()``` and ```fgets()``` parameters.
 It looks like it opens the file with the password we're looking for, and saves it in ```c```!
 It then does nothing with ```c```.
 ```
+(gdb) disas main
+   0x080485c2 <+161>:	mov    $0x80486e9,%edx
+   0x080485c7 <+166>:	mov    $0x80486eb,%eax
+   0x080485cc <+171>:	mov    %edx,0x4(%esp)
+   0x080485d0 <+175>:	mov    %eax,(%esp)
+   0x080485d3 <+178>:	call   0x8048430 <fopen@plt>
+[...]
+   0x080485e4 <+195>:	movl   $0x8049960,(%esp)
+   0x080485eb <+202>:	call   0x80483c0 <fgets@plt>
+   
 (gdb) x/s 0x80486e9
 0x80486e9:	 "r"
 (gdb) x/s 0x80486eb
@@ -66,7 +76,7 @@ Dump of assembler code for function m:
    0x08048501 <+13>:	call   0x80483d0 <time@plt>
    0x08048506 <+18>:	mov    $0x80486e0,%edx
    0x0804850b <+23>:	mov    %eax,0x8(%esp)
-   0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)
+   0x0804850f <+27>:	movl   $0x8049960,0x4(%esp)      <- 0x8049960 is the address of variable c
    0x08048517 <+35>:	mov    %edx,(%esp)
    0x0804851a <+38>:	call   0x80483b0 <printf@plt>
    0x0804851f <+43>:	leave
