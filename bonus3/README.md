@@ -44,7 +44,7 @@ Congratulations graduate!
 ```
 Maybe should have used ```strncmp()``` instead of ```strcmp()```.
 
-Anways Congratulations graduate!
+Anyways Congratulations graduate!
 
 ## Recreate Exploited Binary
 
