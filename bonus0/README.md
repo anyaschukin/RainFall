@@ -40,9 +40,8 @@ Investigating with gdb we find main calls ```pp()```.  <br />
 ```p``` reads 4096 bytes into a buffer, then uses ```strncpy()``` to return the first 20 bytes. <br />
 ```strncpy()```'s return is not null-terminated if the source is longer than destination. <br />
 
-Then, ```pp()``` calls ```strcpy()``` on ```strncpy()```'s return string... but it's not null-terminated soooooooooooo THINGS
-
-Then when ```pp``` uses ```strcpy``` to copy the first string, without null termination it continues past the first string into the second.
+Then, ```pp()``` calls ```strcpy()``` on ```strncpy()```'s return string... but it's not null-terminated. <br />
+Without null termination ```strcpy()``` continues past the first string into the second. <br />
 This leads to us overflowing the main buffer, overwriting the EIP return address, and segfaulting.
 
 Let's try to write our malicious code (which opens a shell) in the first string.
