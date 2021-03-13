@@ -10,6 +10,9 @@ For each level:
 
 * ```source.c``` the reverse engineered binary
 
+See the [subject](https://github.com/dfinnis/Rainfall/blob/master/subject.pdf) for more details.
+
+
 ## Levels Overview
 
 * Level 0 - gdb disassembly reveals argument password
