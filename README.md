@@ -10,7 +10,7 @@ For each level:
 
 * ```source.c``` the reverse engineered binary
 
-See the [subject](https://github.com/dfinnis/Rainfall/blob/master/subject.pdf) for more details.
+See the [subject](https://github.com/anyashuka/Rainfall/blob/master/subject.pdf) for more details.
 
 
 ## Levels Overview
