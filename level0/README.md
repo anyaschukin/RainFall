@@ -2,7 +2,7 @@
 
 ## Vulnerability
 
-gdb disassembly reveals argument password
+gdb disassembly reveals hardcoded password
 
 ## Context
 
