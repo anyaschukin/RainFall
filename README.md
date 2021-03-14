@@ -73,7 +73,7 @@ Then log in as user *level1*.
 Repeat for each level.
 
 
-## Reverse-engineer binary
+## Reverse-engineered binary
 
 For each level, we reverse engineered the original *source.c* by examining the gdb disassembly of the binary.
 
