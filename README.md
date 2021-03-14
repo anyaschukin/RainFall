@@ -40,7 +40,7 @@ Next click Settings > Network > Adapter 1 > Attached to: Bridged Adapter.
 Still in settings click Storage > Right of "Controller: IDE" there is a CD icon with a + sign (add optical drive).
 Click Add Disk Image, and select *RainFall.iso*.
 
-Click start to start the VM, once runnning it should show the VM IP address and prompt user to login.
+Click Start to start the VM, once runnning it should show the VM IP address and prompt user to login.
 
 ### SSH connect
 
@@ -48,7 +48,7 @@ Log in from a separate shell as user *level0* with password *level0*.
 
 ```ssh level0@{VM_IP} -p 4242```
 
-<img src="https://github.com/anyashuka/Rainfall/blob/master/img/ssh.png" width="500">
+<img src="https://github.com/anyashuka/Rainfall/blob/master/img/ssh.png" width="800">
 
 ### Level Up
 
@@ -56,7 +56,7 @@ As user *level0* the goal is to read the password for user *level1*, found at */
 
 In the home folder for user *level0* is a binary *level0* with SUID set and owner *level1*.
 
-<img src="https://github.com/anyashuka/Rainfall/blob/master/img/suid.png" width="500">
+<img src="https://github.com/anyashuka/Rainfall/blob/master/img/suid.png" width="400">
 
 This means when we execute the binary *level0* we do so with the permissions of user *level1*.
 
@@ -68,7 +68,7 @@ Then log in as user *level1*.
 
 ```su level1```
 
-<img src="https://github.com/anyashuka/Rainfall/blob/master/img/su.png" width="500">
+<img src="https://github.com/anyashuka/Rainfall/blob/master/img/su.png" width="330">
 
 Repeat for each level.
 
