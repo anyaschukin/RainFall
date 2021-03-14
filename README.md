@@ -52,24 +52,25 @@ Log in from a separate shell as user *level0* with password *level0*.
 
 ### Level Up
 
-As user *level0* the goal is to find the password (flag) for user *flag0*, see [level00/](https://github.com/anyashuka/Rainfall/tree/master/level0) for how.
+As user *level0* the goal is to read the password for user *level1*, found at */home/user/level1/.pass*. However, user *level0* does not have permissions to read this file.
 
-Log in as user *flag00*.
+In the home folder for user *level0* is a binary *level0* with SUID set and owner *level1*.
 
-```su flag00```
+<img src="https://github.com/anyashuka/Rainfall/blob/master/img/suid.png" width="500">
 
-Run *getflag* to find the password for user *level01*.
+This means when we execute the binary *level0* we do so with the permissions of user *level1*.
 
-```getflag```
+We must find a vulnerability in the binary *level0* with gdb. Then exploit the vulnerability to run *system("/bin/sh")*, opening a shell as user *level1* where we have permissions to read the password.
 
-Log in as user *level01*.
+```cat /home/user/level1/.pass```
 
-```su level01```
+Then log in as user *level1*.
+
+```su level1```
 
 <img src="https://github.com/anyashuka/Rainfall/blob/master/img/su.png" width="500">
 
-Repeat these steps for each level.
-
+Repeat for each level.
 
 
 ## Levels Overview
