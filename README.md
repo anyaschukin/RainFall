@@ -1,6 +1,6 @@
-# Rainfall
+# RainFall
 
-Discover gdb disassembly and binary exploitation through 14 little challenges.
+Discover gdb disassembly, binary exploitation & reverse-engineering through 14 little challenges.
 
 In the folder for each level you will find:
 
@@ -58,7 +58,7 @@ In the home folder for user *level0* is a binary *level0* with SUID set and owne
 
 <img src="https://github.com/anyashuka/Rainfall/blob/master/img/suid.png" width="400">
 
-This means when we execute the binary *level0* we do so with the permissions of user *level1*.
+This means when we execute the binary *level0*, we do so with the permissions of user *level1*.
 
 We must find a vulnerability in the binary *level0* with gdb. Then exploit the vulnerability to run *system("/bin/sh")*, opening a shell as user *level1* where we have permissions to read the password.
 
@@ -71,6 +71,13 @@ Then log in as user *level1*.
 <img src="https://github.com/anyashuka/Rainfall/blob/master/img/su.png" width="330">
 
 Repeat for each level.
+
+
+## Reverse-engineer binary
+
+For each level, we reverse engineered the original *source.c* by examining the gdb disassembly of the binary.
+
+Each level's *README.md* details how to to compile *source.c*, set SUID, then run with the exploit, demonstrating the same vulnerability.
 
 
 ## Levels Overview
