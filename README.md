@@ -82,7 +82,7 @@ Each level's *README.md* details how to to compile *source.c*, set SUID, then ru
 
 ## Levels Overview
 
-* [0](https://github.com/anyashuka/Rainfall/tree/master/level0) - gdb disassembly reveals hardcoded password
+* [0](https://github.com/anyashuka/Rainfall/tree/master/level0) - hardcoded password
 
 * [1](https://github.com/anyashuka/Rainfall/tree/master/level1) - gets() stack overflow
 
