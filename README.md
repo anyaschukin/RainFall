@@ -82,25 +82,25 @@ Each level's *README.md* details how to to compile *source.c*, set SUID, then ru
 
 ## Levels Overview
 
-* [Level 0](https://github.com/anyashuka/Rainfall/tree/master/level0) - gdb disassembly reveals hardcoded password
+* [0](https://github.com/anyashuka/Rainfall/tree/master/level0) - gdb disassembly reveals hardcoded password
 
-* [Level 1](https://github.com/anyashuka/Rainfall/tree/master/level1) - gets() stack overflow
+* [1](https://github.com/anyashuka/Rainfall/tree/master/level1) - gets() stack overflow
 
-* [Level 2](https://github.com/anyashuka/Rainfall/tree/master/level2) - gets() stack overflow, return address in heap
+* [2](https://github.com/anyashuka/Rainfall/tree/master/level2) - gets() stack overflow, return address in heap
 
-* [Level 3](https://github.com/anyashuka/Rainfall/tree/master/level3) - printf() format string attack
+* [3](https://github.com/anyashuka/Rainfall/tree/master/level3) - printf() format string attack
 
-* [Level 4](https://github.com/anyashuka/Rainfall/tree/master/level4) - printf() format string attack, with %d
+* [4](https://github.com/anyashuka/Rainfall/tree/master/level4) - printf() format string attack, with %d
 
-* [Level 5](https://github.com/anyashuka/Rainfall/tree/master/level5) - printf() format string attack, with %d
+* [5](https://github.com/anyashuka/Rainfall/tree/master/level5) - printf() format string attack, with %d
 
-* [Level 6](https://github.com/anyashuka/Rainfall/tree/master/level6) - strcpy() buffer overflow
+* [6](https://github.com/anyashuka/Rainfall/tree/master/level6) - strcpy() buffer overflow
 
-* [Level 7](https://github.com/anyashuka/Rainfall/tree/master/level7) - strcpy() buffer overflow
+* [7](https://github.com/anyashuka/Rainfall/tree/master/level7) - strcpy() buffer overflow
 
-* [Level 8](https://github.com/anyashuka/Rainfall/tree/master/level8) - idiocy
+* [8](https://github.com/anyashuka/Rainfall/tree/master/level8) - idiocy
 
-* [Level 9](https://github.com/anyashuka/Rainfall/tree/master/level9) - memcpy() buffer overflow
+* [9](https://github.com/anyashuka/Rainfall/tree/master/level9) - memcpy() buffer overflow
 
 * [Bonus 0](https://github.com/anyashuka/Rainfall/tree/master/bonus0) - strcpy() buffer overflow
 
