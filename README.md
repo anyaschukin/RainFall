@@ -37,7 +37,7 @@ Continue through all the next steps with the default settings:
 
 Next click Settings > Network > Adapter 1 > Attached to: Bridged Adapter.
 
-Still in settings click Storage > Right of "Controller: IDE" there is a CD icon with a + sign (add optical drive).
+Still in settings click Storage > Right of "Controller: IDE", there is a CD icon with a + sign (add optical drive).
 Click Add Disk Image, and select *RainFall.iso*.
 
 Click Start to start the VM, once runnning it should show the VM IP address and prompt user to login.
