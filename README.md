@@ -4,13 +4,16 @@ Discover gdb disassembly, binary exploitation & reverse-engineering through 14 l
 
 In the folder for each level you will find:
 
-* *flag* - password for next level
+* **flag** - password for next level
 
-* *README.md* - how to find the password
+* **README.md** - how to find the password
 
-* *source.c* - the reverse engineered binary
+* **source.c** - the reverse engineered binary
 
 See the [subject](https://github.com/anyashuka/Rainfall/blob/master/subject.pdf) for more details.
+
+For more gdb & exploitation fun check out the next project [OverRide](https://github.com/anyaschukin/OverRide).
+
 
 #### Final Score 125/100
 
