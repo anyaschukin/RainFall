@@ -14,8 +14,7 @@ See the [subject](https://github.com/anyashuka/Rainfall/blob/master/subject.pdf)
 
 For more gdb & exploitation fun check out the next project [OverRide](https://github.com/anyaschukin/OverRide).
 
-
-#### Final Score 125/100
+*Final Score 125/100*
 
 
 ## Getting Started
